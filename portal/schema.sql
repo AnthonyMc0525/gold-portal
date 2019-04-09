@@ -6,4 +6,8 @@ CREATE TABLE users (
     password text NOT NULL,
     role varchar(7) NOT NULL CHECK (role IN ('teacher', 'student'))
 );
-
+--BEGIN
+--    IF role = 'teacher' THEN
+--        INSERT INTO users
+--    END IF;
+--END 

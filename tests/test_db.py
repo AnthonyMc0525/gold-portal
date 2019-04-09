@@ -28,3 +28,11 @@ def test_init_db_command(runner, monkeypatch):
     assert 'Initialized' in result.output
     assert Recorder.called
 
+
+def test_role_check(role):
+    if role = 'teacher':
+        allow;
+    elif role = 'student':
+        allow;
+    else:
+        fail;
