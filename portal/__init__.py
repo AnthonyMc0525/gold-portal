@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 
 def create_app(test_config=None):
@@ -18,9 +18,9 @@ def create_app(test_config=None):
     from . import db
     db.init_app(app)
 
-    @app.route('/')
+    @app.route('/', methods=('GET', 'POST'))
     def index():
-        return render_template('index.html')
+        method = request.method
+        return render_template('index.html', method=method)
 
     return app
-
