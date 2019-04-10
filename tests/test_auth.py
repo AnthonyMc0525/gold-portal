@@ -1,7 +1,3 @@
-import pytest
-from flask import g, session
-from portal.db import get_db
-
 def test_login(client, auth):
     response = client.get('/')
     assert response.status_code == 200

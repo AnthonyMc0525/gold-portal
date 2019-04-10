@@ -1,7 +1,7 @@
 import sys
 import os
 
-from flask import Flask, render_template, flash, request, Blueprint
+from flask import Flask, render_template, flash, request
 
 
 def create_app(test_config=None):
@@ -28,6 +28,20 @@ def create_app(test_config=None):
     @app.route('/', methods=('GET', 'POST'))
     def index():
         method = request.method
+        if method == 'POST':
+            email = request.form['email']
+            password = request.form['password']
+            con = db.get_db()
+            cur = con.cursor()
+            cur.execute("SELECT * FROM users WHERE email=%s", (email,))
+            user = cur.fetchone()
+            if user == None:
+                flash('Your Email was Incorrect')
+            elif user[2] != password:
+                flash('Your Password was Incorrect')
+            cur.close()
+            con.close()
         return render_template('index.html', method=method)
+
 
     return app
