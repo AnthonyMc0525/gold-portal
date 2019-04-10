@@ -1,0 +1,18 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}TSCT Portal{% endblock %}
+
+{% block content %}
+<form name="test" class="" action="register" method="post">
+  <label for="email">Email
+    <input type="text" name="email" value="">
+  </label>
+  <label for="password">Password
+    <input type="password" name="password" value="">
+  </label>
+  <label for="role">Role
+    <input type="text" name="role" value="">
+  </label>
+  <input type="submit" name="submit" value="Register">
+</form>
+{% endblock %}

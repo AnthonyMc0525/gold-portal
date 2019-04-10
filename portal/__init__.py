@@ -1,4 +1,7 @@
-from flask import Flask, render_template
+import sys
+import os
+
+from flask import Flask, render_template, flash, request
 
 
 def create_app(test_config=None):
@@ -18,9 +21,9 @@ def create_app(test_config=None):
     from . import db
     db.init_app(app)
 
+
     @app.route('/')
     def index():
         return render_template('index.html')
 
     return app
-
