@@ -29,10 +29,14 @@ def test_init_db_command(runner, monkeypatch):
     assert Recorder.called
 
 
-def test_role_check(role):
-    if role = 'teacher':
-        allow;
-    elif role = 'student':
-        allow;
-    else:
-        fail;
+def test_create_user_command(runner, monkeypatch):
+    class Recorder(object):
+        called = False
+
+    def fake_create_user():
+        Recorder.called = True
+
+    monkeypatch.setattr('portal.db.create_user', fake_create_user)
+    result = runner.invoke(args=['create-user'])
+    assert 'Created' in result.output
+    assert Recorder.called
