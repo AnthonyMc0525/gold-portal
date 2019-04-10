@@ -14,7 +14,7 @@
       </label>
       <input type="submit" value="Login" />
     </form>
-  {% else %}
+  {% elif method == 'POST' %}
     <button type="button" name="logout">Logout</button>
   {% endif %}
 {% endblock %}
