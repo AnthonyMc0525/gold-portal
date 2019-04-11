@@ -9,12 +9,26 @@ from portal.db import get_db
 
 bp = Blueprint('courses', __name__, url_prefix='/courses')
 
+@bp.route('/courses')
+def index():
+    db = get_db()
+    #posts = db.execute(
+    #    'SELECT p.id, title, body, created, author_id, username'
+    #    ' FROM post p JOIN user u ON p.author_id = u.id'
+    #    ' ORDER BY created DESC'
+    #).fetchall()
+    return render_template('courses/index.html', posts=posts)
+
 @bp.route('/create-course', methods=('GET', 'POST'))
-def create_course():
+def create():
     if request.method == "GET":
         return render_temaplate('create-course.html')
 
     elif request.method == "POST":
+        course = request.form['course']
+        course_id = request.form['course_id']
+        error = None
+
         new_course = request.form['']
 
         if new_course:
@@ -23,35 +37,9 @@ def create_course():
             con = db.get_db()
             cur = con.cursor()
             cur.execute(
-                    "INSERT INTO courses (course, course_id, teacher) VALUES (%s, %s, %s)",
-                    (new_course, course_id, teacher)
+                    "INSERT INTO courses (course, course_id) VALUES (%s, %s)",
+                    (new_course, course_id)
             
             )
 
-    return render_template('create-crouse.html', new_course=new_course)
-
-    @app.route('/create-course', methods=['GET', 'POST'])
-    def course():
-        if request.method == "GET":
-            return render_template('create-course.html')
-
-        elif request.method == "POST":
-            new_course = request.form['']
-
-            if new_course:
-
-                # Save to database
-                con = db.get_db()
-                cur = con.cursor()
-                cur.execute(
-                        "INSERT INTO courses (course, course_id, teacher) VALUES (%s, %s, %s)",
-                        (new_course, course_id, teacher)
-                )
-                con.commit()
-                cur.close()
-
-                flash('Your new course is now created. Want to add another?', 'success')
-            else:
-                flash('You need to add some information first.', 'error')
-
-        return render_template('create-course.html', new_course=new_course)
+    return render_template('courses/create-course.html', new_course=new_course)
