@@ -12,6 +12,8 @@ def app():
         'TESTING': True,
         'DB_NAME': 'portal_test',
         'DB_USER': 'portal_user',
+        'EMAIL': 'teacher@stevenscollege.edu',
+        'PASSWORD': 'qwerty',
     })
 
     with app.app_context():
@@ -49,7 +51,7 @@ class AuthActions(object):
         )
 
     def logout(self):
-        return self._client.get('/auth/logout')
+        return self._client.get('/')
 
 
 @pytest.fixture

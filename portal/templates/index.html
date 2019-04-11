@@ -4,7 +4,7 @@
 
 {% block content %}
 
-  {% if method == 'GET' %}
+  {% if logged_in == False %}
     <form method = "post">
       <label for="email">Email
         <input type="email" name="email" />
@@ -14,7 +14,7 @@
       </label>
       <input type="submit" value="Login" />
     </form>
-  {% elif method == 'POST' %}
+  {% elif logged_in == True %}
     <button type="button" name="logout">Logout</button>
   {% endif %}
 {% endblock %}
