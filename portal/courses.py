@@ -1,5 +1,9 @@
 import functools
 
+import os
+
+import sys
+
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for
 )
@@ -9,7 +13,7 @@ from portal.db import get_db
 
 bp = Blueprint('courses', __name__, url_prefix='/courses')
 
-@bp.route('/courses')
+@bp.route('/')
 def index():
     db = get_db()
     #posts = db.execute(
@@ -17,12 +21,13 @@ def index():
     #    ' FROM post p JOIN user u ON p.author_id = u.id'
     #    ' ORDER BY created DESC'
     #).fetchall()
-    return render_template('courses/index.html', posts=posts)
+    return render_template('/courses/index.html')
 
-@bp.route('/create-course', methods=('GET', 'POST'))
+@bp.route('/create', methods=('GET', 'POST'))
 def create():
     if request.method == "GET":
-        return render_temaplate('create-course.html')
+
+        return render_template('/courses/create.html')
 
     elif request.method == "POST":
         course = request.form['course']
@@ -39,7 +44,7 @@ def create():
             cur.execute(
                     "INSERT INTO courses (course, course_id) VALUES (%s, %s)",
                     (new_course, course_id)
-            
+
             )
 
-    return render_template('courses/create-course.html', new_course=new_course)
+    return render_template('/courses/create.html')
