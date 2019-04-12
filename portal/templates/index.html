@@ -1,6 +1,15 @@
 {% extends "layouts/base.html" %}
-
+ 
 {% block title %}TSCT Portal{% endblock %}
+
+{% block header %}
+  {% if logged_in == True %}
+  <div class="logout_button">
+    <span>Welcome {{ session['user_id'] }}</span>
+    <button type="button" name="logout" id='logout'>Logout</button>
+  </div>  
+  {% endif %}
+{% endblock %}
 
 {% block content %}
 
@@ -14,7 +23,6 @@
       </label>
       <input type="submit" value="Login" />
     </form>
-  {% elif logged_in == True %}
-    <button type="button" name="logout">Logout</button>
   {% endif %}
 {% endblock %}
+
