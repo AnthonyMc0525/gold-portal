@@ -54,3 +54,31 @@ def create():
 
         return render_template('/courses/create.html', course=course)
     return render_template('/courses/create.html', course=course)
+
+@bp.route('/update', methods=['GET', 'POST'])
+def update():
+    if request.method == "GET":
+        return render_template('/courses/update.html')
+
+    elif request.method == "POST":
+        course = request.form.get('course', False)
+        course_id = request.form['course_id']
+        course_description = request.form['course_description']
+        error = None
+
+        if course:
+
+            # Save to database
+            con = db.get_db()
+            cur = con.cursor()
+            cur.execute(
+                    "UPDATE courses SET course = %s, course_description = %s WHERE course_id = %s",
+                    (course, course_id, course_description)
+            )
+            con.commit()
+            con.close()
+        flash('Success!', 'success')
+        flash('Your new course is edited!', 'success')
+
+        return render_template('/courses/update.html', course=course)
+    return render_template('/courses/update.html', course=course)
