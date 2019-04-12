@@ -11,5 +11,6 @@ CREATE TABLE users (
 CREATE TABLE courses (
     id bigserial PRIMARY KEY,
     course text NOT NULL,
-    course_id text UNIQUE NOT NULL
+    course_id text UNIQUE NOT NULL,
+    course_description text NOT NULL
 );

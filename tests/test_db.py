@@ -41,6 +41,3 @@ def test_create_user_command(runner, monkeypatch):
     assert 'Created' in result.output
     assert Recorder.called
 
-def test_create_course_post(client):
-    response = client.post('/method')
-    assert response.data == b'HTTP Method: POST'

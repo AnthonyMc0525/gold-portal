@@ -9,6 +9,8 @@ from flask import (
 )
 from werkzeug.security import check_password_hash, generate_password_hash
 
+from . import db
+
 from portal.db import get_db
 
 bp = Blueprint('courses', __name__, url_prefix='/courses')
@@ -23,28 +25,32 @@ def index():
     #).fetchall()
     return render_template('/courses/index.html')
 
-@bp.route('/create', methods=('GET', 'POST'))
+@bp.route('/create', methods=['GET', 'POST'])
 def create():
     if request.method == "GET":
-
         return render_template('/courses/create.html')
 
     elif request.method == "POST":
-        course = request.form['course']
+        course = request.form.get('course', False)
         course_id = request.form['course_id']
+        course_description = request.form['course_description']
         error = None
 
-        new_course = request.form['']
-
-        if new_course:
+        if course:
 
             # Save to database
             con = db.get_db()
             cur = con.cursor()
             cur.execute(
-                    "INSERT INTO courses (course, course_id) VALUES (%s, %s)",
-                    (new_course, course_id)
+                    "INSERT INTO courses (course, course_id, course_description) VALUES (%s, %s, %s)",
+
+                    (course, course_id, course_description)
 
             )
+            con.commit()
+            con.close()
+        flash('Success!', 'success')
+        flash('Your new course is created!', 'success')
 
-    return render_template('/courses/create.html')
+        return render_template('/courses/create.html', course=course)
+    return render_template('/courses/create.html', course=course)
