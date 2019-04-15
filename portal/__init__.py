@@ -1,7 +1,5 @@
-import sys
+from flask import Flask, render_template, request, redirect, session, flash, url_for
 import os
-
-from flask import Flask, render_template, request, redirect, session, flash, url_for, Blueprint
 import psycopg2
 import psycopg2.extras
 
@@ -10,10 +8,6 @@ import psycopg2.extras
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
     app.secret_key = os.urandom(24)
-    
-    from . import courses
-    app.register_blueprint(courses.bp)
-    app.add_url_rule('/', endpoint='index')
 
     app.config.from_mapping(
         SECRET_KEY='dev',
@@ -30,8 +24,8 @@ def create_app(test_config=None):
 
     from . import db
     db.init_app(app)
-    
-    @app.route('/')
+
+    @app.route('/', methods=['GET', 'POST'])
     def index():
         logged_in = False
         method = request.method
@@ -59,11 +53,13 @@ def create_app(test_config=None):
 
         return render_template('index.html', logged_in=logged_in,session=session)
 
+
     @app.route('/getsession')
     def get_session():
         if 'user_id' in session:
             return str(session['user_id'])
         else:
             return 'You are not logged in'
+
 
     return app
