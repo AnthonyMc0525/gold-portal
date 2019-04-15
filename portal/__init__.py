@@ -1,32 +1,79 @@
-import sys
+from flask import Flask, render_template, request, redirect, session, flash, url_for
 import os
+import psycopg2
+import psycopg2.extras
 
-from flask import Flask, render_template, flash, request, Blueprint
 
 
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
+<<<<<<< HEAD
 
     from . import courses
     app.register_blueprint(courses.bp)
 
+=======
+    app.secret_key = os.urandom(24)
+>>>>>>> 64f8f4aca2ca2af280831deee90b65b893a3e9ec
 
     app.config.from_mapping(
         SECRET_KEY='dev',
         DB_NAME='portal',
         DB_USER='portal_user',
+        EMAIL='teacher@stevenscollege.edu',
+        PASSWORD='qwerty',
     )
 
     if test_config is None:
         app.config.from_pyfile('config.py', silent=True)
     else:
         app.config.from_mapping(test_config)
+<<<<<<< HEAD
 
     @app.route('/')
     def index():
         return render_template('index.html')
+=======
+>>>>>>> 64f8f4aca2ca2af280831deee90b65b893a3e9ec
 
     from . import db
     db.init_app(app)
+
+    @app.route('/', methods=['GET', 'POST'])
+    def index():
+        logged_in = False
+        method = request.method
+        if method == 'POST':
+            email = request.form['email']
+            password = request.form['password']
+            con = db.get_db()
+            cur = con.cursor(cursor_factory = psycopg2.extras.DictCursor)
+            error = None
+            cur.execute("SELECT * FROM users WHERE email=%s", (email,))
+            user = cur.fetchone()
+            print(user)
+            if user is None:
+                error = 'Incorrect error'
+            elif user['password'] != password:
+                error = 'Your Password was Incorrect'
+                
+            if error is None:
+                logged_in = True
+                session.clear()
+                session['user_id'] = user['first_name']
+
+            cur.close()
+            con.close()
+
+        return render_template('index.html', logged_in=logged_in,session=session)
+
+
+    @app.route('/getsession')
+    def get_session():
+        if 'user_id' in session:
+            return str(session['user_id'])
+        else:
+            return 'You are not logged in'
+
 
     return app

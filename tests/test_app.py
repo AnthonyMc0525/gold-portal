@@ -8,6 +8,7 @@ def test_config():
 def test_index(client):
     response = client.get('/')
     assert b'<h1>TSCT Portal</h1>' in response.data
+<<<<<<< HEAD
     assert b'<form>' in response.data
 
 def test_files_course_exist(client):

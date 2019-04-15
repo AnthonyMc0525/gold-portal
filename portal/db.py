@@ -1,10 +1,12 @@
 import os
 import psycopg2
+import psycopg2.extras
+
 
 import click
 from flask import current_app, g
 from flask.cli import with_appcontext
-from sys import argv
+
 
 def get_db():
     if 'db' not in g:
@@ -36,23 +38,7 @@ def init_db():
         cur.execute(f.read())
         cur.close()
         db.commit()
-
-def create_user():
-    con = get_db()
-    print("Enter user's email")
-    email = input(">")
-    print("Enter user's password")
-    password = input(">")
-    print("Enter user's role")
-    role = input(">")
-    with current_app.open_resource('schema.sql') as f:
-        cur = con.cursor()
-        cur.execute(
-            "INSERT INTO users(email, password, role) VALUES (%s, %s, %s)",
-            (email, password, role)
-        )
-        con.commit()
-        cur.close()
+        
 
 @click.command('init-db')
 @with_appcontext
@@ -61,13 +47,8 @@ def init_db_command():
     init_db()
     click.echo('Initialized the database.')
 
-@click.command('create-user')
-@with_appcontext
-def create_user_command():
-    create_user()
-    click.echo('Created user')
 
 def init_app(app):
     app.teardown_appcontext(close_db)
     app.cli.add_command(init_db_command)
-    app.cli.add_command(create_user_command)
+

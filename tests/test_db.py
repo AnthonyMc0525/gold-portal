@@ -28,6 +28,7 @@ def test_init_db_command(runner, monkeypatch):
     assert 'Initialized' in result.output
     assert Recorder.called
 
+<<<<<<< HEAD
 
 def test_create_user_command(runner, monkeypatch):
     class Recorder(object):
@@ -41,3 +42,5 @@ def test_create_user_command(runner, monkeypatch):
     assert 'Created' in result.output
     assert Recorder.called
 
+=======
+>>>>>>> 64f8f4aca2ca2af280831deee90b65b893a3e9ec

@@ -37,7 +37,15 @@ body {
   padding: 1rem;
 }
 
-@media (min-width: 760px) {
+div {
+  text-align: right;
+  position: absolute;
+  right: 1em;
+  top: 1em;
+  color: white;
+  }
+
+@meia (min-width: 760px) {
   footer {
     display: flex;
     justify-content: space-between;
@@ -57,6 +65,12 @@ form {
   margin: 0 auto;
   padding: 1rem;
   width: 35vw;
+}
+
+body header {
+  margin: 0;
+  padding: 0;
+  background-color: #802941;
 }
 
 label {

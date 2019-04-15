@@ -1,15 +1,32 @@
+<<<<<<< HEAD
 {% extends "base.html" %}
 
+=======
+{% extends "layouts/base.html" %}
+ 
+>>>>>>> 64f8f4aca2ca2af280831deee90b65b893a3e9ec
 {% block title %}TSCT Portal{% endblock %}
 
+{% block header %}
+  {% if logged_in == True %}
+  <div class="logout_button">
+    <span>Welcome {{ session['user_id'] }}</span>
+    <button type="button" name="logout" id='logout'>Logout</button>
+  </div>  
+  {% endif %}
+{% endblock %}
+
 {% block content %}
-  <form>
-    <label for="email">Email
-      <input type="email" name="email" />
-    </label>
-    <label for="password">Password
-      <input type="password" name="password" />
-    </label>
-    <input type="submit" value="Login" />
-  </form>
+
+  {% if logged_in == False %}
+    <form method = "post">
+      <label for="email">Email
+        <input type="email" name="email" />
+      </label>
+      <label for="password">Password
+        <input type="password" name="password" />
+      </label>
+      <input type="submit" value="Login" />
+    </form>
+  {% endif %}
 {% endblock %}
