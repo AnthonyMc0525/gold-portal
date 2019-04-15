@@ -8,7 +8,6 @@ CREATE TABLE users (
     password text NOT NULL,
     role varchar(7) NOT NULL CHECK (role IN ('teacher', 'student'))
 );
-<<<<<<< HEAD
 
 CREATE TABLE courses (
     id bigserial PRIMARY KEY,
@@ -16,5 +15,3 @@ CREATE TABLE courses (
     course_id text UNIQUE NOT NULL,
     course_description text NOT NULL
 );
-=======
->>>>>>> 64f8f4aca2ca2af280831deee90b65b893a3e9ec
