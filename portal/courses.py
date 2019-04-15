@@ -61,7 +61,7 @@ def update():
         return render_template('/courses/update.html')
 
     elif request.method == "POST":
-        course = request.form.get('course', False)
+        course = request.form['course']
         course_id = request.form['course_id']
         course_description = request.form['course_description']
         error = None
@@ -72,13 +72,23 @@ def update():
             con = db.get_db()
             cur = con.cursor()
             cur.execute(
-                    "UPDATE courses SET course = %s, course_description = %s WHERE course_id = %s",
-                    (course, course_id, course_description)
+                    "SELECT * FROM courses WHERE course_id = %s",
+                    (course_id,)
             )
+            result=cur.fetchone()
+            if result != None:
+                cur.execute(
+                        "UPDATE courses SET course = %s, course_description = %s WHERE course_id = %s",
+                        (course, course_description, course_id)
+                )
+                flash('Success!', 'success')
+                flash('Your new course is edited!', 'success')
+
+            elif result == None:
+                flash('That course does not exist')
+
             con.commit()
             con.close()
-        flash('Success!', 'success')
-        flash('Your new course is edited!', 'success')
 
         return render_template('/courses/update.html', course=course)
     return render_template('/courses/update.html', course=course)

@@ -38,6 +38,6 @@ def test_update_course_post(client):
             data={'course': course, 'course_id': course_id, 'course_description': course_description})
 
     response = post_data()
-    assert b'<div>' in response.data
+    assert b'<div class="flash">' in response.data
     assert response.status_code == 200
     # see if post method works
