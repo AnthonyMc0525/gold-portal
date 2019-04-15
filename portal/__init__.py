@@ -7,14 +7,12 @@ import psycopg2.extras
 
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
-<<<<<<< HEAD
 
     from . import courses
     app.register_blueprint(courses.bp)
 
-=======
+
     app.secret_key = os.urandom(24)
->>>>>>> 64f8f4aca2ca2af280831deee90b65b893a3e9ec
 
     app.config.from_mapping(
         SECRET_KEY='dev',
@@ -28,13 +26,10 @@ def create_app(test_config=None):
         app.config.from_pyfile('config.py', silent=True)
     else:
         app.config.from_mapping(test_config)
-<<<<<<< HEAD
 
     @app.route('/')
     def index():
         return render_template('index.html')
-=======
->>>>>>> 64f8f4aca2ca2af280831deee90b65b893a3e9ec
 
     from . import db
     db.init_app(app)
