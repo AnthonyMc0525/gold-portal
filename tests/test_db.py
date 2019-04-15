@@ -40,3 +40,4 @@ def test_create_user_command(runner, monkeypatch):
     result = runner.invoke(args=['create-user'])
     assert 'Created' in result.output
     assert Recorder.called
+
