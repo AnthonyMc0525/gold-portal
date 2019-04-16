@@ -1,7 +1,7 @@
 import sys
 import os
 
-from flask import Flask, render_template, request, session
+from flask import Flask, render_template, request, flash, session
 import psycopg2
 import psycopg2.extras
 

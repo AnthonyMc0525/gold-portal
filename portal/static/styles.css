@@ -45,7 +45,7 @@ div {
   color: white;
   }
 
-@meia (min-width: 760px) {
+@media (min-width: 760px) {
   footer {
     display: flex;
     justify-content: space-between;
@@ -81,5 +81,3 @@ label {
 label input {
   width: 100%;
 }
-
-

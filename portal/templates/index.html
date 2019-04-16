@@ -1,5 +1,5 @@
 {% extends "layouts/base.html" %}
- 
+
 {% block title %}TSCT Portal{% endblock %}
 
 {% block header %}
@@ -7,7 +7,7 @@
   <div class="logout_button">
     <span>Welcome {{ session['user_id'] }}</span>
     <button type="button" name="logout" id='logout'>Logout</button>
-  </div>  
+  </div>
   {% endif %}
 {% endblock %}
 
@@ -25,4 +25,3 @@
     </form>
   {% endif %}
 {% endblock %}
-
