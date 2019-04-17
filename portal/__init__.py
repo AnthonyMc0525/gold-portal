@@ -1,7 +1,7 @@
 import sys
 import os
 
-from flask import Flask, render_template, request, flash, session
+from flask import Flask, render_template, request, flash, session, redirect, url_for
 import psycopg2
 import psycopg2.extras
 
@@ -59,12 +59,10 @@ def create_app(test_config=None):
         return render_template('index.html', logged_in=logged_in,session=session)
 
 
-    @app.route('/getsession')
-    def get_session():
-        if 'user_id' in session:
-            return str(session['user_id'])
-        else:
-            return 'You are not logged in'
-
+    @app.route('/logout', methods=['GET'])
+    def logout():
+        session.clear()
+        print('Got Here')
+        return redirect(url_for('index'))
 
     return app
