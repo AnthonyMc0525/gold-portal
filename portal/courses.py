@@ -1,7 +1,4 @@
-import functools
-
 import os
-
 import sys
 
 from flask import (
@@ -9,13 +6,13 @@ from flask import (
 )
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from . import db
-
+from . import login_required
 from portal.db import get_db
 
 bp = Blueprint('courses', __name__, url_prefix='/courses')
 
-@bp.route('/courses')
+@bp.route('/index')
+@login_required
 def index():
     db = get_db()
     #posts = db.execute(
@@ -23,9 +20,10 @@ def index():
     #    ' FROM post p JOIN user u ON p.author_id = u.id'
     #    ' ORDER BY created DESC'
     #).fetchall()
-    return render_template('/courses/courses.html')
+    return render_template('/courses/index.html')
 
 @bp.route('/create', methods=['GET', 'POST'])
+@login_required
 def create():
     if request.method == "GET":
         return render_template('/courses/create.html')
@@ -56,6 +54,7 @@ def create():
     return render_template('/courses/create.html', course=course)
 
 @bp.route('/update', methods=['GET', 'POST'])
+@login_required
 def update():
     if request.method == "GET":
         return render_template('/courses/update.html')
