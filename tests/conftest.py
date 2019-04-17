@@ -4,6 +4,7 @@ import pytest
 
 from portal import create_app
 from portal.db import get_db, init_db
+from werkzeug.security import generate_password_hash
 
 
 @pytest.fixture
