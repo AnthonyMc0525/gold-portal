@@ -6,7 +6,7 @@ from flask import (
 )
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from . import login_required
+from . import login_required, teacher_required
 from portal.db import get_db
 
 bp = Blueprint('courses', __name__, url_prefix='/courses')
@@ -24,6 +24,7 @@ def index():
 
 @bp.route('/create', methods=['GET', 'POST'])
 @login_required
+@teacher_required
 def create():
     if request.method == "GET":
         return render_template('/courses/create.html')
@@ -55,6 +56,7 @@ def create():
 
 @bp.route('/update', methods=['GET', 'POST'])
 @login_required
+@teacher_required
 def update():
     if request.method == "GET":
         return render_template('/courses/update.html')

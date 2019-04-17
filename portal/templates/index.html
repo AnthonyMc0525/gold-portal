@@ -12,6 +12,23 @@
 {% endblock %}
 
 {% block content %}
+  {% if g.user %}
+    {% if g.user[5] == "teacher" %}
+    <nav>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="{{url_for('courses.index')}}">Courses</a></li>
+      </ul>
+    </nav>
+    {% elif g.user[5] == "student" %}
+    <nav>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="{{url_for('courses.index')}}">Courses</a></li>
+      </ul>
+    </nav>
+    {% endif %}
+  {% endif %}
 
   {% if not g.user %}
     <form method = "post">
@@ -23,5 +40,7 @@
       </label>
       <input type="submit" value="Login" />
     </form>
+
+
   {% endif %}
 {% endblock %}

@@ -16,6 +16,16 @@ def login_required(view):
 
     return wrapped_view
 
+def teacher_required(view):
+    @functools.wraps(view)
+    def wrapped_view(**kwargs):
+        if g.user[5] != "teacher":
+            return redirect(url_for("courses.index"))
+
+        return view(**kwargs)
+
+    return wrapped_view
+
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
     app.secret_key = os.urandom(24)

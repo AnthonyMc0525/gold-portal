@@ -16,5 +16,14 @@
     </label>
     <input type="submit" name="Edit Course" value="save">
   </form>
+    <nav>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="{{url_for('courses.index')}}">Course List</a></li>
+        <li><a href="{{url_for('courses.create')}}">Create Course</a></li>
+        <li><a href="{{url_for('courses.update')}}">Edit Course</a></li>
+
+      </ul>
+    </nav>
 
 {% endblock %}

@@ -4,4 +4,25 @@
 
 {% block content %}
   <h3>This is a course</h3>
+  {% if g.user %}
+    {% if g.user[5] == "teacher" %}
+    <nav>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="{{url_for('courses.index')}}">Course List</a></li>
+        <li><a href="{{url_for('courses.create')}}">Create Course</a></li>
+        <li><a href="{{url_for('courses.update')}}">Edit Course</a></li>
+
+      </ul>
+    </nav>
+    {% elif g.user[5] == "student" %}
+    <nav>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="{{url_for('courses.index')}}">Course List</a></li>
+      </ul>
+    </nav>
+    {% endif %}
+  {% endif %}
+
 {% endblock %}
