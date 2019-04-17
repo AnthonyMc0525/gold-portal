@@ -7,6 +7,7 @@ import click
 from flask import current_app, g
 from flask.cli import with_appcontext
 from sys import argv
+from werkzeug.security import generate_password_hash
 
 def get_db():
     if 'db' not in g:
@@ -51,7 +52,7 @@ def create_user():
         cur = con.cursor()
         cur.execute(
             "INSERT INTO users(email, password, role) VALUES (%s, %s, %s)",
-            (email, password, role)
+            (email, generate_password_hash(password), role)
         )
         con.commit()
         cur.close()
