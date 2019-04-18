@@ -4,6 +4,7 @@ import os
 from flask import Flask, render_template, request, flash, session
 import psycopg2
 import psycopg2.extras
+from werkzeug.security import check_password_hash, generate_password_hash
 
 
 def create_app(test_config=None):
@@ -19,7 +20,7 @@ def create_app(test_config=None):
         DB_NAME='portal',
         DB_USER='portal_user',
         EMAIL='teacher@stevenscollege.edu',
-        PASSWORD='qwerty',
+        PASSWORD=generate_password_hash('qwerty'),
     )
 
     if test_config is None:
@@ -42,11 +43,11 @@ def create_app(test_config=None):
             error = None
             cur.execute("SELECT * FROM users WHERE email=%s", (email,))
             user = cur.fetchone()
-            print(user)
-            if user is None:
-                error = 'Incorrect error'
-            elif user['password'] != password:
+            if email is None:
+                error = 'Incorrect email'
+            elif not check_password_hash(user['password'], password):
                 error = 'Your Password was Incorrect'
+            print(error)
 
             if error is None:
                 logged_in = True
