@@ -3,26 +3,25 @@
 {% block title %}TSCT Portal{% endblock %}
 
 {% block content %}
-  <h3>This is a course</h3>
-  {% if g.user %}
-    {% if g.user[5] == "teacher" %}
-    <nav>
-      <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="{{url_for('courses.index')}}">Course List</a></li>
-        <li><a href="{{url_for('courses.create')}}">Create Course</a></li>
-        <li><a href="{{url_for('courses.update')}}">Edit Course</a></li>
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="{{url_for('courses.index')}}">Course List</a></li>
+      {% if g.user[5] == "teacher" %}
+      <li><a href="{{url_for('courses.create')}}">Create Course</a></li>
+      <li><a href="{{url_for('courses.update')}}">Edit Course</a></li>
+      {% endif %}
+    </ul>
+  </nav>
 
-      </ul>
-    </nav>
-    {% elif g.user[5] == "student" %}
-    <nav>
-      <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="{{url_for('courses.index')}}">Course List</a></li>
-      </ul>
-    </nav>
-    {% endif %}
-  {% endif %}
 
+  <main class="course-list">
+    {% for course in courses %}
+    <article class="course">
+      <h2>{{ course['number'] }}: {{ course['name'] }}</h2>
+
+      <p>{{ course['description'] }}</p>
+    </article>
+    {% endfor %}
+  </main>
 {% endblock %}

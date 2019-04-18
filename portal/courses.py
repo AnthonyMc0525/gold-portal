@@ -5,6 +5,7 @@ from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for
 )
 from werkzeug.security import check_password_hash, generate_password_hash
+from psycopg2.extras import DictCursor
 
 from . import login_required, teacher_required
 from portal.db import get_db
@@ -14,45 +15,38 @@ bp = Blueprint('courses', __name__, url_prefix='/courses')
 @bp.route('/index')
 @login_required
 def index():
-    db = get_db()
-    #posts = db.execute(
-    #    'SELECT p.id, title, body, created, author_id, username'
-    #    ' FROM post p JOIN user u ON p.author_id = u.id'
-    #    ' ORDER BY created DESC'
-    #).fetchall()
-    return render_template('/courses/index.html')
+    con = get_db()
+    cur = con.cursor(cursor_factory=DictCursor)
+    cur.execute("SELECT * FROM courses")
+    courses = cur.fetchall()
+    cur.close()
+
+    return render_template('/courses/index.html', courses=courses)
 
 @bp.route('/create', methods=['GET', 'POST'])
 @login_required
 @teacher_required
 def create():
-    if request.method == "GET":
-        return render_template('/courses/create.html')
-
-    elif request.method == "POST":
-        course = request.form.get('course', False)
-        course_id = request.form['course_id']
-        course_description = request.form['course_description']
+    if request.method == "POST":
+        name = request.form['name']
+        number = request.form['number']
+        description = request.form['description']
         error = None
 
-        if course:
+        # Save to database
+        con = get_db()
+        cur = con.cursor()
+        cur.execute(
+            "INSERT INTO courses (name, number, description) VALUES (%s, %s, %s)",
+            (name, number, description)
+        )
+        con.commit()
+        cur.close()
 
-            # Save to database
-            con = db.get_db()
-            cur = con.cursor()
-            cur.execute(
-                    "INSERT INTO courses (course, course_id, course_description) VALUES (%s, %s, %s)",
+        flash('Success!')
 
-                    (course, course_id, course_description)
+    return render_template('/courses/create.html')
 
-            )
-            con.commit()
-            con.close()
-        flash('Success!', 'success')
-        flash('Your new course is created!', 'success')
-
-        return render_template('/courses/create.html', course=course)
-    return render_template('/courses/create.html', course=course)
 
 @bp.route('/update', methods=['GET', 'POST'])
 @login_required
@@ -70,7 +64,7 @@ def update():
         if course:
 
             # Save to database
-            con = db.get_db()
+            con = get_db()
             cur = con.cursor()
             cur.execute(
                     "SELECT * FROM courses WHERE course_id = %s",

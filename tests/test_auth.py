@@ -14,5 +14,9 @@ def test_login(client, auth):
         assert b'logout' in response.data
         # assert b'1' in response.data
         assert b'teacher' in response.data
+
+
+
+
     
     # check session user_id for correct id

@@ -51,6 +51,12 @@ class AuthActions(object):
             data={'email': email, 'password': password}
         )
 
+    #def create_course(self, course='CSET180', course_id='CSET180', course_description='This is 180'):
+    #    return self._client.post(
+    #        '/courses/create',
+    #        data={'course': course, 'course_id': course_id, 'course_description': course_description}
+    #    )
+
     def logout(self):
         return self._client.get('/')
 
