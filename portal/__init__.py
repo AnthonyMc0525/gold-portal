@@ -38,11 +38,12 @@ def create_app(test_config=None):
         if method == 'POST':
             email = request.form['email']
             password = request.form['password']
-            con = db.get_db()
-            cur = con.cursor(cursor_factory = psycopg2.extras.DictCursor)
-            error = None
-            cur.execute("SELECT * FROM users WHERE email=%s", (email,))
-            user = cur.fetchone()
+
+            with db.get_db() as con:
+                with con.cursor() as cur:
+                    cur.execute("SELECT * FROM users WHERE email=%s", (email,))
+                    user = cur.fetchone()
+                    
             if email is None:
                 error = 'Incorrect email'
             elif not check_password_hash(user['password'], password):
@@ -54,8 +55,6 @@ def create_app(test_config=None):
                 session.clear()
                 session['user_id'] = user['first_name']
 
-            cur.close()
-            con.close()
 
         return render_template('index.html', logged_in=logged_in,session=session)
 
