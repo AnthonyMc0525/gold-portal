@@ -39,7 +39,7 @@ def create():
         if course:
             with db.get_db() as con:
                 with con.cursor() as cur:
-                    cur.execute("INSERT INTO courses (course, course_id, course_description) VALUES (%s, %s, %s)",(course, course_id, course_description)
+                    cur.execute("INSERT INTO courses (course, course_id, course_description) VALUES (%s, %s, %s)",(course, course_id, course_description))
 
             # Save to database
             #con = db.get_db()
