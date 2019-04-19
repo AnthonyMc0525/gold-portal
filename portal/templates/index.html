@@ -4,10 +4,13 @@
 
 {% block header %}
   {% if logged_in == True %}
-  <div class="logout_button">
-    <span>Welcome {{ session['user_id'] }}</span>
-    <button type="button" name="logout" id='logout'><a href="/logout">Logout</a></button>
-  </div>
+    <div class="out_button">
+      <button type="button" name="logout" id='logout'></button>
+      <div class="logout_button">
+        <span>Welcome {{ session['user_id'] }}</span>
+        <a href="/logout" >Logout</a>
+      </div>
+    </div>
   {% endif %}
 {% endblock %}
 
