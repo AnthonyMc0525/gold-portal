@@ -12,7 +12,7 @@ from portal.db import get_db
 
 bp = Blueprint('courses', __name__, url_prefix='/courses')
 
-@bp.route('/index')
+@bp.route('/')
 @login_required
 def index():
     con = get_db()

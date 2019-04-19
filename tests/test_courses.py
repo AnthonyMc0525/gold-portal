@@ -1,12 +1,12 @@
 def test_course_list(client, auth):
-    response = client.get('/courses/index')
+    response = client.get('/courses/')
     assert b'<main class="course-list"' not in response.data
     assert response.headers['Location'] == 'http://localhost/'
 
     with client:
         response = auth.login()
         assert response.status_code == 200
-        response = client.get('/courses/index')
+        response = client.get('/courses/')
         assert b'<main class="course-list"' in response.data
         assert b'<form method = "post">' not in response.data
 
@@ -17,7 +17,7 @@ def test_course_create(client, auth):
         response = auth.login()
         assert response.status_code == 200
 
-        response = client.get('/courses/index')
+        response = client.get('/courses/')
         assert response.status_code == 200
         assert b'CSET160' not in response.data
 
@@ -34,7 +34,7 @@ def test_course_create(client, auth):
         assert response.status_code == 200
         assert b'Success!' in response.data
 
-        response = client.get('/courses/index')
+        response = client.get('/courses/')
         assert b'Web Development II' in response.data
         
         

@@ -17,11 +17,11 @@
 
   <main class="course-list">
     {% for course in courses %}
-    <article class="course">
-      <h2>{{ course['number'] }}: {{ course['name'] }}</h2>
+      <article class="course">
+        <h2>{{ course['number'] }}: {{ course['name'] }}</h2>
 
-      <p>{{ course['description'] }}</p>
-    </article>
+        <p>{{ course['description'] }}</p>
+      </article>
     {% endfor %}
   </main>
 {% endblock %}
