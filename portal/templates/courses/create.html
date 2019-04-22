@@ -1,28 +1,36 @@
 {% extends "layouts/base.html" %}
 
 {% block title %}TSCT Portal{% endblock %}
+{% block header %}
+  {% if g.user %}
+  <div class="logout_button">
+    <span>Welcome {{ g.user[1] }}</span>
+    <button type="button" name="logout" id='logout'><a href="/logout">Logout</a></button>
+  </div>
+  {% endif %}
+{% endblock %}
+
 
 {% block content %}
-  <form class="create-course" method="post">
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="{{url_for('courses.index')}}">Course List</a></li>
+      {% if g.user[5] == 'teacher' %}
+      <li><a href="{{url_for('courses.create')}}">Create a Course</a></li>
+      {% endif %}
+    </ul>
+  </nav>
+  <form class="create-course" method="post" required>
     <label for="name">Course Name
-      <input type="text" name="name" />
+      <input type="text" name="name" required />
     </label>
     <label for="number">Course ID
-      <input type="text" name="number" />
+      <input type="text" name="number" required />
     </label>
     <label for="description">Course Description
-      <input type="text" name="description" />
+      <input type="text" name="description" required />
     </label>
     <input type="submit" name="Create Course" value="Create Course">
   </form>
-
-    <nav>
-      <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="{{url_for('courses.index')}}">Course List </a></li>
-
-      </ul>
-    </nav>
-
-
 {% endblock %}

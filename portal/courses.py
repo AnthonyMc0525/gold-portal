@@ -17,7 +17,7 @@ bp = Blueprint('courses', __name__, url_prefix='/courses')
 def index():
     con = get_db()
     cur = con.cursor(cursor_factory=DictCursor)
-    cur.execute("SELECT * FROM courses")
+    cur.execute("SELECT * FROM courses WHERE teacher_id = %s", (g.user['id'],))
     courses = cur.fetchall()
     cur.close()
 
@@ -31,14 +31,15 @@ def create():
         name = request.form['name']
         number = request.form['number']
         description = request.form['description']
+        teacher_id = g.user[0]
         error = None
 
         # Save to database
         con = get_db()
         cur = con.cursor()
         cur.execute(
-            "INSERT INTO courses (name, number, description) VALUES (%s, %s, %s)",
-            (name, number, description)
+            "INSERT INTO courses (name, number, description, teacher_id) VALUES (%s, %s, %s, %s)",
+            (name, number, description, teacher_id)
         )
         con.commit()
         cur.close()
@@ -47,35 +48,31 @@ def create():
 
     return render_template('/courses/create.html')
 
+def get_course(id):
+    con = get_db()
+    cur = con.cursor()
+    cur.execute("SELECT * FROM courses WHERE course_id=%s", (id,))
+    course = cur.fetchone()
+    cur.close()
 
-@bp.route('/<int:id>/update', methods=('GET', 'POST'))
+    return course
+
+@bp.route('/<int:id>/update', methods=['GET', 'POST'])
 @login_required
 @teacher_required
 def update(id):
-    def get_course(id):
-        con = get_db()
-        cur = con.cursor()
-        cur.execute("SELECT * FROM courses WHERE course_id=%s", (id,))
-        course = cur.fetchone()
-        cur.close()
-
-        return course
-
     course = get_course(id)
-    if g.user[3] == 'teacher':
-       if request.method == 'POST':
-            name = request.form['name']
-            number =  request.form['number']
-            description = request.form['description']
+    if request.method == 'POST':
+         name = request.form['name']
+         number =  request.form['number']
+         description = request.form['description']
 
-            con = get_db()
-            cur = con.cursor()
-            cur.execute("UPDATE courses SET name = %s, number = %s, description = %s WHERE course_id = %s", (name, number, description, id,))
-            cur.close()
-            con.commit()
-            con.close()
+         con = get_db()
+         cur = con.cursor()
+         cur.execute("UPDATE courses SET name = %s, number = %s, description = %s  WHERE course_id = %s", (name, number, description, id,))
+         con.commit()
 
-            return redirect(url_for('courses.index'))
+         return redirect(url_for('courses.index'))
 
     return render_template('courses/update.html', course=course)
 

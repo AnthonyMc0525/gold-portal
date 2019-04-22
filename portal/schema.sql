@@ -15,6 +15,5 @@ CREATE TABLE courses (
     name text NOT NULL,
     number text UNIQUE NOT NULL,
     description text NOT NULL,
-    teacher_id integer REFERENCES users(id)
-);
-
+    teacher_id bigint NOT NULL REFERENCES users(id)
+  );

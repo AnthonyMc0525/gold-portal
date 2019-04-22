@@ -82,6 +82,10 @@ label input {
   width: 100%;
 }
 
+p {
+  text-align: center;
+}
+
 .course-list {
   text-align: center;
 }

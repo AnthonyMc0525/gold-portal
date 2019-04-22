@@ -1,24 +1,35 @@
 {% extends "layouts/base.html" %}
 
 {% block title %}TSCT Portal{% endblock %}
+{% block header %}
+  {% if g.user %}
+  <div class="logout_button">
+    <span>Welcome {{ g.user[1] }}</span>
+    <button type="button" name="logout" id='logout'><a href="/logout">Logout</a></button>
+  </div>
+  {% endif %}
+{% endblock %}
+
 
 {% block content %}
   <nav>
     <ul>
       <li><a href="/">Home</a></li>
       <li><a href="{{url_for('courses.index')}}">Course List</a></li>
-
+      {% if g.user[5] == 'teacher' %}
+      <li><a href="{{url_for('courses.create')}}">Create a Course</a></li>
+      {% endif %}
     </ul>
   </nav>
 
 
-  <main class="course-list">
     {% for course in courses %}
     <article class="course">
-      <h2 class="course-list"> 
-        <a href="{{ url_for('courses.update', id=course[0])}}" class="edit">Edit</a> - {{ course[1] }} - {{  course[2] }}
-      </h2>
+      <h2 class="course-list"> {{ course[2] }}: {{  course[1] }}</h2>
+  
+      <p>{{ course['description'] }}</p>
+      <p><a href="{{ url_for('courses.update', id=course[0])}}">Edit This Course</a></p>
     </article>
+
     {% endfor %}
-  </main>
 {% endblock %}
