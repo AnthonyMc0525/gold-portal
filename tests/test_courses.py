@@ -27,14 +27,43 @@ def test_course_create(client, auth):
         assert b'Success!' not in response.data
         
         response = client.post('/courses/create', data={
-            'name': 'Web Development II',
-            'number': 'CSET160',
-            'description': 'The best course ever.'
+            'name': 'Web development 2',
+            'number': 'CSET200',
+            'description': 'SKDMKD',
         })
         assert response.status_code == 200
         assert b'Success!' in response.data
 
+def test_course_owner(client, auth):
+    with client:
+        response = auth.login2()
+        assert response.status_code == 200
+
         response = client.get('/courses/')
-        assert b'Web Development II' in response.data
+        assert b'Web development 2' not in response.data
+
+    with client:
+        response = auth.login()
+        assert response.status_code == 200
+        
+        response = client.get('/courses/')
+        assert response.status_code == 200
+        assert b'Web development 2' in response.data
+
+
+def test_course_update(client, auth):
+    with client:
+        response = auth.login()
+        assert response.status_code == 200
+
+        response = client.get('/courses/update')
+        assert response.status_code == 200
+        
+        response = client.post('/courses/update', data={
+            'name': 'Web development 2',
+            'number': 'updated',
+            'description': 'updated',
+        })
+        assert response.status_code == 200
         
         
