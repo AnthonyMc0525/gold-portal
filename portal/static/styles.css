@@ -17,6 +17,24 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 400;
 }
 
+ul {
+  list-style-type: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:visited {
+  color: black;
+}
+
+a:hover {
+  color: #8B1E41;
+  font-weight: bolder;
+  font-size: 1em;
+}
+
 h1 {
   color: white;
   font-size: 50px;
@@ -47,8 +65,11 @@ div {
 
 @media (min-width: 760px) {
   footer {
+    margin-top: 6rem;
     display: flex;
     justify-content: space-between;
+    background-color: lightgrey;
+    text-align: center;
   }
   footer h2,
   footer address {
@@ -70,7 +91,7 @@ form {
 body header {
   margin: 0;
   padding: 0;
-  background-color: #802941;
+  background-color: #8B1E41;
 }
 
 label {
@@ -82,8 +103,41 @@ label input {
   width: 100%;
 }
 
+label {
+  text-align: center;
+}
+
+input[type=text], textarea {
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid #8B1E41;
+  padding: 12px;
+}
+
+
+input[type=submit] {
+  background-color: #8B1E41;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  float: right;
+}
+
+input[type=submit]:hover {
+  color: #8B1E41;
+  background-color: white;
+  border-color: #8B1E41;
+  border-style: solid;
+}
+
 p {
   text-align: center;
+}
+
+p > a {
+  text-decoration: underline;
 }
 
 .course-list {
