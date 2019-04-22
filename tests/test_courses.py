@@ -34,9 +34,18 @@ def test_course_create(client, auth):
         assert response.status_code == 200
         assert b'Success!' in response.data
 
-def test_course_owner(client, auth):
+
+def test_course_update(client, auth):
     with client:
-        response = auth.login2()
+        response = auth.login()
+        assert response.status_code == 200
+
+        
+        response = client.post('/courses/1/update', data={
+            'name': 'Web development 2',
+            'number': 'updated',
+            'description': 'updated',
+        })
         assert response.status_code == 200
 
         response = client.get('/courses/')
@@ -55,9 +64,6 @@ def test_course_update(client, auth):
     with client:
         response = auth.login()
         assert response.status_code == 200
-
-        response = client.get('/courses/update')
-        assert response.status_code == 200
         
         response = client.post('/courses/update', data={
             'name': 'Web development 2',
@@ -65,5 +71,4 @@ def test_course_update(client, auth):
             'description': 'updated',
         })
         assert response.status_code == 200
-        
         

@@ -48,7 +48,6 @@ def create():
     return render_template('/courses/create.html')
 
 
-
 @bp.route('/<int:id>/update', methods=('GET', 'POST'))
 @login_required
 @teacher_required
@@ -79,8 +78,4 @@ def update(id):
             return redirect(url_for('courses.index'))
 
     return render_template('courses/update.html', course=course)
-
-
-
-
 
