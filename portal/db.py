@@ -17,9 +17,10 @@ def get_db():
             g.db = psycopg2.connect(DB_URL, sslmode='require')
         else:
             g.db = psycopg2.connect(
-                dbname=current_app.config['DB_NAME'],
+
+                dbname=current_app.config['DB_NAME'], 
                 user=current_app.config['DB_USER'],
-                cursor_factory=DictCursor
+                cursor_factory=DictCursor 
             )
 
     return g.db
