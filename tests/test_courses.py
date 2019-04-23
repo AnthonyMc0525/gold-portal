@@ -74,3 +74,5 @@ def test_course_update(client, auth):
             'description': 'updated',
         })
 
+
+
