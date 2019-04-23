@@ -2,7 +2,7 @@ import os
 import sys
 
 from flask import (
-    Blueprint, flash, g, redirect, render_template, request, session, url_for
+    Blueprint, g, redirect, render_template, request, session, url_for
 )
 from werkzeug.security import check_password_hash, generate_password_hash
 from psycopg2.extras import DictCursor
@@ -35,13 +35,10 @@ def create():
         error = None
 
 
-        # Save to database
-        if course:
-            with db.get_db() as con:
-                with con.cursor() as cur:
-                    cur.execute("INSERT INTO courses (course, course_id, course_description) VALUES (%s, %s, %s)",(course, course_id, course_description))
+        with db.get_db() as con:
+            with con.cursor() as cur:
+                cur.execute("INSERT INTO courses (course, course_id, course_description) VALUES (%s, %s, %s)",(course, course_id, course_description))
 
-        flash('Success!')
 
     return render_template('/courses/create.html')
 
@@ -51,14 +48,6 @@ def get_course(id):
         with con.cursor() as cur:
             cur.execute("SELECT * FROM courses WHERE course_id=%s", (id,))
     
-
-        if course:
-            with db.get_db() as con:
-                with con.cursor() as cur:
-                    cur.execute("INSERT INTO courses (course, course_id, course_description) VALUES (%s, %s, %s)",(course, course_id, course_description))
-
-        flash('Success!', 'success')
-        flash('Your new course is created!', 'success')
 
     return course
 
