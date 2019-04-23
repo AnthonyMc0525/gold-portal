@@ -81,3 +81,19 @@ label {
 label input {
   width: 100%;
 }
+
+p {
+  text-align: center;
+}
+
+.course-list {
+  text-align: center;
+}
+
+.course {
+  margin-left: 25%;
+  margin-right: 25%;
+  border-style: inset;
+  border-width: thick;
+  border-color: #8B1E41;
+}

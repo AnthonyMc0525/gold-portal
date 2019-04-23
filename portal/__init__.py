@@ -1,19 +1,35 @@
 import sys
 import os
+import functools
 
-from flask import Flask, render_template, request, session
+from flask import Flask, render_template, request, flash, session, g, redirect, url_for
 import psycopg2
 import psycopg2.extras
 from werkzeug.security import check_password_hash, generate_password_hash
 
+def login_required(view):
+    @functools.wraps(view)
+    def wrapped_view(**kwargs):
+        if g.user is None:
+            return redirect(url_for('index'))
+
+        return view(**kwargs)
+
+    return wrapped_view
+
+def teacher_required(view):
+    @functools.wraps(view)
+    def wrapped_view(**kwargs):
+        if g.user[5] != "teacher":
+            return redirect(url_for("courses.index"))
+
+        return view(**kwargs)
+
+    return wrapped_view
 
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
     app.secret_key = os.urandom(24)
-
-    from . import courses
-    app.register_blueprint(courses.bp)
-    app.add_url_rule('/', endpoint='index')
 
     app.config.from_mapping(
         SECRET_KEY='dev',
@@ -31,9 +47,27 @@ def create_app(test_config=None):
     from . import db
     db.init_app(app)
 
+    @app.before_request
+    def load_logged_in_user():
+        user_id = session.get('user_id')
+
+        if user_id is None:
+            g.user = None
+        else:
+            connection = db.get_db()
+            cursor = connection.cursor()
+            cursor.execute(
+                'SELECT * FROM users WHERE id = %s', (user_id,)
+            )
+            g.user = cursor.fetchone()
+
+
+    from . import courses
+    app.register_blueprint(courses.bp)
+    app.add_url_rule('/', endpoint='index')
+
     @app.route('/', methods=['GET', 'POST'])
     def index():
-        logged_in = False
         method = request.method
         error = None
         if method == 'POST':
@@ -47,25 +81,23 @@ def create_app(test_config=None):
                     
             if email is None:
                 error = 'Incorrect email'
-            elif not check_password_hash(user['password'], password):
+            elif not check_password_hash(user['password'], password): 
                 error = 'Your Password was Incorrect'
             print(error)
 
             if error is None:
-                logged_in = True
                 session.clear()
-                session['user_id'] = user['first_name']
+                session['user_id'] = user['id']
+                g.user = user
 
 
-        return render_template('index.html', logged_in=logged_in,session=session)
+        return render_template('index.html')
 
 
-    @app.route('/getsession')
-    def get_session():
-        if 'user_id' in session:
-            return str(session['user_id'])
-        else:
-            return 'You are not logged in'
+    @app.route('/logout')
+    def logout():
+        session.clear()
+        return redirect(url_for('index'))
 
 
     return app

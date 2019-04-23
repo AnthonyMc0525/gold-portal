@@ -21,16 +21,15 @@
       {% endif %}
     </ul>
   </nav>
-  <form class="create-course" method="post" required>
-    <label for="name">Course Name
-      <input type="text" name="name" required />
-    </label>
-    <label for="number">Course ID
-      <input type="text" name="number" required />
-    </label>
-    <label for="description">Course Description
-      <input type="text" name="description" required />
-    </label>
-    <input type="submit" name="Create Course" value="Create Course">
-  </form>
+
+
+    {% for course in courses %}
+    <article class="course">
+      <h2 class="course-list"> {{ course[2] }}: {{  course[1] }}</h2>
+  
+      <p>{{ course['description'] }}</p>
+      <p><a href="{{ url_for('courses.update', id=course[0])}}">Edit This Course</a></p>
+    </article>
+
+    {% endfor %}
 {% endblock %}

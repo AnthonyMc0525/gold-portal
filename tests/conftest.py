@@ -51,6 +51,12 @@ class AuthActions(object):
             data={'email': email, 'password': password}
         )
 
+    def login2(self, email='user4@test.com', password='admin'):
+        return self._client.post(
+            '/',
+            data={'email': email, 'password': password}
+            )
+
     def logout(self):
         return self._client.get('/')
 

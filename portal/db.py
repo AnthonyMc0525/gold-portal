@@ -17,6 +17,7 @@ def get_db():
             g.db = psycopg2.connect(DB_URL, sslmode='require')
         else:
             g.db = psycopg2.connect(
+
                 dbname=current_app.config['DB_NAME'], 
                 user=current_app.config['DB_USER'],
                 cursor_factory=DictCursor 
@@ -55,6 +56,7 @@ def create_user():
             "INSERT INTO users(email, password, role) VALUES (%s, %s, %s)",
             (email, generate_password_hash(password), role)
         )
+        print(generate_password_hash(password))
         con.commit()
         cur.close()
 
