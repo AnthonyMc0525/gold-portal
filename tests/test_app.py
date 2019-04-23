@@ -7,15 +7,15 @@ def test_config():
 
 def test_index(client):
     response = client.get('/')
-    assert b'<h1>TSCT Portal</h1>' in response.data
+    assert b'<h1>Thaddeus Stevens Portal</h1>' in response.data
     assert b'<form method = "post">' in response.data
 
 def test_files_course_exist(client):
     response = client.get('/courses/courses')
-    assert b'<h1>TSCT Portal</h1>' in response.data
+    assert b'<h1>Thaddeus Stevens Portal</h1>' in response.data
 
     response = client.get('/courses/create')
-    assert b'<h1>TSCT Portal</h1>' in response.data
+    assert b'<h1>Thaddeus Stevens Portal</h1>' in response.data
     assert b'<form method="post">' in response.data
 
     response = client.get('/courses/update')
