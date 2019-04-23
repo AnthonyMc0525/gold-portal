@@ -37,18 +37,18 @@ def create():
         error = None
 
         if course:
+            with db.get_db() as con:
+                with con.cursor() as cur:
+                    cur.execute("INSERT INTO courses (course, course_id, course_description) VALUES (%s, %s, %s)",(course, course_id, course_description))
 
             # Save to database
-            con = db.get_db()
-            cur = con.cursor()
-            cur.execute(
-                    "INSERT INTO courses (course, course_id, course_description) VALUES (%s, %s, %s)",
+            #con = db.get_db()
+            #cur = con.cursor()
+            #cur.execute("INSERT INTO courses (course, course_id, course_description) VALUES (%s, %s, %s)",(course, course_id, course_description)
 
-                    (course, course_id, course_description)
-
-            )
-            con.commit()
-            con.close()
+            #)
+            #con.commit()
+            #con.close()
         flash('Success!', 'success')
         flash('Your new course is created!', 'success')
 
