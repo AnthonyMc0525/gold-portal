@@ -1,10 +1,11 @@
 {% extends "layouts/base.html" %}
 
 {% block title %}TSCT Portal{% endblock %}
+
 {% block header %}
   {% if g.user %}
   <div class="logout_button">
-    <span>Welcome {{ g.user[1] }}</span>
+    <span>Welcome {{ g.user[1] }} {{ g.user[2] }}</span>
     <button type="button" name="logout" id='logout'><a href="/logout">Logout</a></button>
   </div>
   {% endif %}
@@ -26,11 +27,11 @@
       <input type="text" name="name" required />
     </label>
     <label for="due_date">Due Date
-      <input type="text" name="number" required />
+      <input type="date" name="due_date" required />
     </label>
     <label for="description">Assignment Description
-      <input type="text" name="description" required />
+      <textarea name="description" rows="8" cols="59" required></textarea>
     </label>
-    <input type="submit" name="Create Course" value="Create Course">
+    <input type="submit" name="Create Assignment" value="Create Assignment">
   </form>
 {% endblock %}

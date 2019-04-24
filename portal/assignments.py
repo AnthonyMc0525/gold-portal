@@ -25,7 +25,7 @@ def assignment_create():
 
         con = get_db()
         cur = con.cursor()
-        cur.execute("INSERT INTO assignments (name, due_date, description) VALUES (%s, %s, %s, %s)", (name, due_date, description))
+        cur.execute("INSERT INTO assignments (name, due_date, description) VALUES (%s, %s, %s)", (name, due_date, description))
 
         con.commit()
         cur.close()
