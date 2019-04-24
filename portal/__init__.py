@@ -66,6 +66,10 @@ def create_app(test_config=None):
     app.register_blueprint(courses.bp)
     app.add_url_rule('/', endpoint='index')
 
+    from . import assignments
+    app.register_blueprint(assignments.bp)
+    app.add_url_rule('/', endpoint='index')
+
     @app.route('/', methods=['GET', 'POST'])
     def index():
         method = request.method
@@ -78,10 +82,10 @@ def create_app(test_config=None):
                 with con.cursor() as cur:
                     cur.execute("SELECT * FROM users WHERE email=%s", (email,))
                     user = cur.fetchone()
-                    
+
             if email is None:
                 error = 'Incorrect email'
-            elif not check_password_hash(user['password'], password): 
+            elif not check_password_hash(user['password'], password):
                 error = 'Your Password was Incorrect'
             print(error)
 

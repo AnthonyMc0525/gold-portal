@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS assignments;
 DROP TABLE IF EXISTS courses;
 DROP TABLE IF EXISTS users;
 
@@ -16,4 +17,11 @@ CREATE TABLE courses (
     number text UNIQUE NOT NULL,
     description text NOT NULL,
     teacher_id bigint NOT NULL REFERENCES users(id)
+  );
+
+CREATE TABLE assignments (
+    id bigserial PRIMARY KEY,
+    name text NOT NULL,
+    due_date date NOT NULL,
+    description text NOT NULL
   );
