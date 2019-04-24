@@ -2,7 +2,7 @@
 
 {% block title %}Thaddeus Stevens Portal{% endblock %}
 {% block header %}
-
+  {% if g.user  %}
     <div class="out_button">
       <button type="button" name="logout" id='logout'><img src="../static/icon.svg" alt="This is a button to show the logout button."></button>
       <div class="logout_button">
@@ -10,6 +10,7 @@
         <p><a href="/logout" >Logout</a></p>
       </div>
     </div>
+  {% endif %}
 {% endblock %}
 
 
