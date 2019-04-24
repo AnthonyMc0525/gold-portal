@@ -3,6 +3,7 @@ import os
 import functools
 
 from flask import Flask, render_template, request, flash, session, g, redirect, url_for
+
 import psycopg2
 import psycopg2.extras
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -98,6 +99,7 @@ def create_app(test_config=None):
     def logout():
         session.clear()
         return redirect(url_for('index'))
+
 
 
     return app

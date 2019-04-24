@@ -2,12 +2,14 @@
 
 {% block title %}TSCT Portal{% endblock %}
 {% block header %}
-  {% if g.user %}
-  <div class="logout_button">
-    <span>Welcome {{ g.user[1] }}</span>
-    <button type="button" name="logout" id='logout'><a href="/logout">Logout</a></button>
-  </div>
-  {% endif %}
+
+    <div class="out_button">
+      <button type="button" name="logout" id='logout'><img src="../static/icon.svg" alt="This is a button to show the logout button."></button>
+      <div class="logout_button">
+        <span>Welcome {{ g.user[1] }} {{ g.user[2] }}</span>
+        <p><a href="/logout" >Logout</a></p>
+      </div>
+    </div>
 {% endblock %}
 
 {% block content %}
@@ -27,6 +29,7 @@
       <p>
       <a href="{{ url_for('courses.update', id=course[0])}}">edit This Course</a>
       </p>
-    </article>{% endblock %}
+    </article>
+{% endblock %}
 
 
