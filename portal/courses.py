@@ -1,3 +1,4 @@
+
 import os
 import sys
 
@@ -22,6 +23,7 @@ def index():
     cur.close()
 
     return render_template('/courses/index.html', courses=courses)
+
 
 @bp.route('/create', methods=['GET', 'POST'])
 @login_required
@@ -48,6 +50,7 @@ def create():
 
     return render_template('/courses/create.html')
 
+
 def get_course(id):
     con = get_db()
     cur = con.cursor()
@@ -56,6 +59,21 @@ def get_course(id):
     cur.close()
 
     return course
+
+@bp.route('/<int:id>', methods=['GET', 'POST'])
+@login_required
+@teacher_required 
+def single(id):
+    course = get_course(id)
+    if request.method == 'get':
+         name = request.form['name']
+         number =  request.form['number']
+         description = request.form['description']
+         return redirect(url_for('courses.index'))
+
+    return render_template('courses/single.html', course=course)
+
+
 
 @bp.route('/<int:id>/update', methods=['GET', 'POST'])
 @login_required
@@ -75,4 +93,3 @@ def update(id):
          return redirect(url_for('courses.index'))
 
     return render_template('courses/update.html', course=course)
-
