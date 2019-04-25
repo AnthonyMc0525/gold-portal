@@ -90,7 +90,7 @@ p {
   text-align: center;
 }
 
-.course {
+.course, .assignment-list {
   margin-left: 25%;
   margin-right: 25%;
   border-style: inset;

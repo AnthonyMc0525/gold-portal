@@ -4,7 +4,7 @@ import functools
 
 from flask import Flask, render_template, request, flash, session, g, redirect, url_for
 import psycopg2
-import psycopg2.extras
+from psycopg2.extras import DictCursor
 from werkzeug.security import check_password_hash, generate_password_hash
 
 def login_required(view):
@@ -70,6 +70,8 @@ def create_app(test_config=None):
     def index():
         method = request.method
         error = None
+        assignments = ''
+
         if method == 'POST':
             email = request.form['email']
             password = request.form['password']
@@ -78,10 +80,10 @@ def create_app(test_config=None):
                 with con.cursor() as cur:
                     cur.execute("SELECT * FROM users WHERE email=%s", (email,))
                     user = cur.fetchone()
-                    
+
             if email is None:
                 error = 'Incorrect email'
-            elif not check_password_hash(user['password'], password): 
+            elif not check_password_hash(user['password'], password):
                 error = 'Your Password was Incorrect'
             print(error)
 
@@ -89,9 +91,14 @@ def create_app(test_config=None):
                 session.clear()
                 session['user_id'] = user['id']
                 g.user = user
+        if g.user:
+            with db.get_db() as con:
+                with con.cursor() as cur:
+                     cur.execute("SELECT * FROM assignments WHERE student_id = %s", (g.user['id'],))
+                     assignments = cur.fetchall()
 
 
-        return render_template('index.html')
+        return render_template('index.html', assignments=assignments)
 
 
     @app.route('/logout')
