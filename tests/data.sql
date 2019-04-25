@@ -13,5 +13,5 @@ VALUES ('Web development 2', 'CSET 170', 'lml', 1),
        ('public speaking', 'ENG 221', 'kldnkn', 4);
 
 INSERT INTO assignments (name, due_date, description)
-VALUES ('Test 1', '1999-04-14', 'Zach day'),
+VALUES ('Test 1', '2019-04-25', 'Zach day'),
        ('Homework 1', '2014-04-14','Another day');

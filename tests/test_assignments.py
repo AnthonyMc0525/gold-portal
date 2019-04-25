@@ -43,7 +43,7 @@ def test_assignment_update(client, auth):
 
         response = client.post('/assignments/create', data={
             'name': 'Test 1',
-            'due_date': '1999-04-14',
+            'due_date': '2019-04-25',
             'description': 'Zach day',
         })
 
