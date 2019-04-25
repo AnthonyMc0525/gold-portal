@@ -53,15 +53,13 @@ def create_user():
     password = input(">")
     print("Enter user's Role")
     role = input(">")
-    with current_app.open_resource('schema.sql') as f:
-        cur = con.cursor()
-        cur.execute(
-            "INSERT INTO users(first_name, last_name,  email, password, role) VALUES (%s, %s, %s, %s, %s)",
-            (first_name, last_name, email, generate_password_hash(password), role)
-        )
-        print(generate_password_hash(password))
-        con.commit()
-        cur.close()
+    with db.get_db() as con:
+        with con.cursor() as cur:
+            cur.execute(
+                "INSERT INTO users(first_name, last_name,  email, password, role) VALUES (%s, %s, %s, %s, %s)",
+                (first_name, last_name, email, generate_password_hash(password), role)
+            )
+            con.commit()
 
 @click.command('init-db')
 @with_appcontext

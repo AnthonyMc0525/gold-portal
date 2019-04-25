@@ -77,13 +77,6 @@ def create():
 def single(id):
     course = get_course(id)
     user = get_user(id)
-
-    if request.method == 'get':
-         name = request.form['name']
-         number =  request.form['number']
-         description = request.form['description']
-         return redirect(url_for('courses.index'))
-
     return render_template('courses/single.html', course=course, user=user)
 
 

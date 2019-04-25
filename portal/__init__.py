@@ -71,17 +71,6 @@ def create_app(test_config=None):
     @app.route('/', methods=['GET', 'POST'])
     def index():
 
-        def get_user(id):
-            con = db.get_db()
-            cur = con.cursor()
-            cur.execute("SELECT * FROM users")
-            user = cur.fetchone()
-            cur.close()
-
-            return user
-
-        user = get_user(id)
-
         method = request.method
         error = None
 
@@ -106,7 +95,7 @@ def create_app(test_config=None):
                 g.user = user
 
 
-        return render_template('index.html', user=user)
+        return render_template('index.html')
 
 
     @app.route('/logout')
