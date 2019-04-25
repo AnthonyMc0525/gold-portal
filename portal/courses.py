@@ -70,7 +70,7 @@ def update(id):
 
          con = get_db()
          cur = con.cursor()
-         cur.execute("UPDATE courses SET name = %s, number = %s, description = %s  WHERE course_id = %s", (name, number, description, id,))
+         cur.execute("UPDATE courses SET name = %s, number = %s, description = %s WHERE course_id = %s", (name, number, description, id,))
          con.commit()
 
          return redirect(url_for('courses.index'))

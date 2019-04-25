@@ -33,3 +33,31 @@ def assignment_create():
         flash('Success!')
 
     return render_template('assignments/create.html')
+
+def get_assignment(id):
+    con = get_db()
+    cur = con.cursor()
+    cur.execute("SELECT * FROM assignments WHERE id=%s", (id,))
+    assignments = cur.fetchone()
+    cur.close()
+
+    return assignments
+
+@bp.route('/<int:id>/update', methods=['GET', 'POST'])
+@login_required
+@teacher_required
+def update(id):
+    assignments = get_assignment(id)
+    if request.method == 'POST':
+         name = request.form['name']
+         due_date =  request.form['due_date']
+         description = request.form['description']
+
+         con = get_db()
+         cur = con.cursor()
+         cur.execute("UPDATE assignments SET name = %s, due_date = %s, description = %s WHERE id = %s", (name, due_date, description, id,))
+         con.commit()
+
+         return redirect(url_for('index'))
+
+    return render_template('assignments/update.html', assignments=assignments)

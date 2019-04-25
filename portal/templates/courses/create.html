@@ -18,6 +18,7 @@
       <li><a href="{{url_for('courses.index')}}">Course List</a></li>
       {% if g.user[5] == 'teacher' %}
       <li><a href="{{url_for('courses.create')}}">Create a Course</a></li>
+      <li><a href="/assignments/create">Create Assignment</a></li>
       {% endif %}
     </ul>
   </nav>

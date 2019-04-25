@@ -1,6 +1,6 @@
 {% extends "layouts/base.html" %}
 
-{% block title %}TSCT Portal{% endblock %}
+{% block title %}Thaddeus Stevens Portal{% endblock %}
 {% block header %}
   {% if g.user %}
   <div class="logout_button">
@@ -22,16 +22,16 @@
    </ul>
  </nav>
 
-<form method="post">
-   <label for="name">Course Name
-     <input type="text" name="name" value="{{ course[1] }}" required/>
+<form class="create-assignment" method="post">
+   <label for="name">Assignment Name
+     <input type="text" name="name" value="{{ assignments[1] }}" required/>
    </label>
-   <label for="number">Course Number
-     <input type="text" name="number" value="{{ course[2] }}" required/>
+   <label for="number">Due Date
+     <input type="date" name="due_date" value="{{ assignments[2] }}" required/>
    </label>
    <label for="description">Course Description
-     <input type="text" name="description" value="{{ course[3] }}" required/>
+     <input type="text" name="description" value="{{ assignments[3] }}" required/>
    </label>
-   <input type="submit" value="Update Course" class="submit" />
+   <input type="submit" value="Update Assignment" class="submit" />
   </form>
 {% endblock %}

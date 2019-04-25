@@ -25,7 +25,7 @@ def test_course_create(client, auth):
         assert response.status_code == 200
         assert b'form class="create-course"' in response.data
         assert b'Success!' not in response.data
-        
+
         response = client.post('/courses/create', data={
             'name': 'Web development 2',
             'number': 'CSET200',
