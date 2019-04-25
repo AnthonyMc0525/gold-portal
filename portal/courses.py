@@ -18,7 +18,7 @@ bp = Blueprint('courses', __name__, url_prefix='/courses')
 def index():
     con = get_db()
     cur = con.cursor(cursor_factory=DictCursor)
-    cur.execute("SELECT * FROM courses WHERE teacher_id = %s", (g.user['id'],))
+    cur.execute("SELECT * FROM courses")
     courses = cur.fetchall()
     cur.close()
 
