@@ -30,7 +30,6 @@
     <article class="course">
       <h2 class="course-list"> {{ course[2] }}: {{  course[1] }}</h2>
   
-      <p>{{ course['description'] }}</p>
       <p>
       {% if g.user[0] == course[4] %}
         <a href="{{ url_for('courses.update', id=course[0])}}">edit this course</a>

@@ -60,18 +60,29 @@ def get_course(id):
 
     return course
 
+def get_user(id):
+    con = get_db()
+    cur = con.cursor()
+    cur.execute("SELECT * FROM users WHERE id=%s", (id,))
+    user = cur.fetchone()
+    cur.close()
+
+    return user
+
 @bp.route('/<int:id>', methods=['GET', 'POST'])
 @login_required
 @teacher_required 
 def single(id):
     course = get_course(id)
+    user = get_user(id)
+
     if request.method == 'get':
          name = request.form['name']
          number =  request.form['number']
          description = request.form['description']
          return redirect(url_for('courses.index'))
 
-    return render_template('courses/single.html', course=course)
+    return render_template('courses/single.html', course=course, user=user)
 
 
 
