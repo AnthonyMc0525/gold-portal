@@ -2,7 +2,7 @@
 
 {% block title %}Thaddeus Stevens Portal{% endblock %}
 {% block header %}
-  {% if g.user  %}
+
     <div class="out_button">
       <button type="button" name="logout" id='logout'><img src="../static/icon.svg" alt="This is a button to show the logout button."></button>
       <div class="logout_button">
@@ -10,33 +10,27 @@
         <p><a href="/logout" >Logout</a></p>
       </div>
     </div>
-  {% endif %}
 {% endblock %}
 
-
 {% block content %}
-  <nav>
-    <ul>
-      <li><a href="/">Home</a></li>
-      <li><a href="{{url_for('courses.index')}}">Course List</a></li>
-      {% if g.user[5] == 'teacher' %}
-      <li><a href="{{url_for('courses.create')}}">Create a Course</a></li>
-      {% endif %}
-    </ul>
-  </nav>
+ <nav>
+   <ul>
+     <li><a href="/">Home</a></li>
+     <li><a href="{{url_for('courses.index')}}">Course List</a></li>
+     {% if g.user[5] == 'teacher' %}
+     <li><a href="{{url_for('courses.create')}}">Create a Course</a></li>
+     {% endif %}
+   </ul>
+ </nav>
 
-
-    {% for course in courses %}
-    <article class="course">
-      <h2 class="course-list"> {{ course[2] }}: {{  course[1] }}</h2>
-  
-      <p>
+    <article class="course" method="get">
+      <h2 class="course-list" name="name" name="number">{{ course[2] }}: {{  course[1] }}</h2>
+      <p name="description">{{ course['description'] }}</p>
+      <p name="description">Created by: {{ user[1] }} {{ user[2] }}</p>
       {% if g.user[0] == course[4] %}
         <a href="{{ url_for('courses.update', id=course[0])}}">edit this course</a>
       {% endif %}
-      <a href="{{ url_for('courses.single', id=course[0])}}">view this course</a> 
-      </p>
     </article>
-
-    {% endfor %}
 {% endblock %}
+
+

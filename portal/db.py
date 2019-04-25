@@ -14,7 +14,7 @@ def get_db():
         # open a connection, save it to close when done
         DB_URL = os.environ.get('DATABASE_URL', None)
         if DB_URL:
-            g.db = psycopg2.connect(DB_URL, sslmode='require')
+            g.db = psycopg2.connect(DB_URL, sslmode='require', cursor_factory=DictCursor)
         else:
             g.db = psycopg2.connect(
 
@@ -44,17 +44,21 @@ def init_db():
 
 def create_user():
     con = get_db()
-    print("Enter user's email")
+    print("Enter user's First Name")
+    first_name = input(">")
+    print("Enter user's Last Name")
+    last_name = input(">")
+    print("Enter user's Email")
     email = input(">")
-    print("Enter user's password")
+    print("Enter user's Password")
     password = input(">")
-    print("Enter user's role")
+    print("Enter user's Role")
     role = input(">")
     with current_app.open_resource('schema.sql') as f:
         cur = con.cursor()
         cur.execute(
-            "INSERT INTO users(email, password, role) VALUES (%s, %s, %s)",
-            (email, generate_password_hash(password), role)
+            "INSERT INTO users(first_name, last_name,  email, password, role) VALUES (%s, %s, %s, %s, %s)",
+            (first_name, last_name, email, generate_password_hash(password), role)
         )
         print(generate_password_hash(password))
         con.commit()
