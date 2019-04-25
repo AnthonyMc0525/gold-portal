@@ -18,7 +18,7 @@ bp = Blueprint('courses', __name__, url_prefix='/courses')
 def index():
     con = get_db()
     cur = con.cursor(cursor_factory=DictCursor)
-    cur.execute("SELECT * FROM courses WHERE teacher_id = %s", (g.user['id'],))
+    cur.execute("SELECT * FROM courses")
     courses = cur.fetchall()
     cur.close()
 
@@ -60,18 +60,29 @@ def get_course(id):
 
     return course
 
+def get_user(id):
+    con = get_db()
+    cur = con.cursor()
+    cur.execute("SELECT * FROM users WHERE id=%s", (id,))
+    user = cur.fetchone()
+    cur.close()
+
+    return user
+
 @bp.route('/<int:id>', methods=['GET', 'POST'])
 @login_required
 @teacher_required 
 def single(id):
     course = get_course(id)
+    user = get_user(id)
+
     if request.method == 'get':
          name = request.form['name']
          number =  request.form['number']
          description = request.form['description']
          return redirect(url_for('courses.index'))
 
-    return render_template('courses/single.html', course=course)
+    return render_template('courses/single.html', course=course, user=user)
 
 
 

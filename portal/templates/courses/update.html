@@ -4,13 +4,14 @@
 {% block header %}
 
     <div class="out_button">
-      <button type="button" name="logout" id='logout'><img src="../static/icon.svg" alt="This is a button to show the logout button."></button>
+      <button type="button" name="logout" id='logout'><img src="/static/icon.svg" alt="This is a button to show the logout button."></button>
       <div class="logout_button">
         <span>Welcome {{ g.user[1] }} {{ g.user[2] }}</span>
         <p><a href="/logout" >Logout</a></p>
       </div>
     </div>
 {% endblock %}
+
 
 {% block content %}
  <nav>
@@ -22,7 +23,7 @@
      {% endif %}
    </ul>
  </nav>
-
+{% if g.user[0] == course[4] %}
 <form method="post">
    <label for="name">Course Name
      <input type="text" name="name" value="{{ course[1] }}" required/>
@@ -35,4 +36,5 @@
    </label>
    <input type="submit" value="Update Course" class="submit" />
   </form>
+ {% endif %}
 {% endblock %}
