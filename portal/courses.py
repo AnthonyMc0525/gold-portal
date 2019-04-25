@@ -13,16 +13,36 @@ from portal.db import get_db
 
 bp = Blueprint('courses', __name__, url_prefix='/courses')
 
+def get_course(id):
+    con = get_db()
+    cur = con.cursor()
+    cur.execute("SELECT * FROM courses WHERE course_id=%s", (id,))
+    course = cur.fetchone()
+    cur.close()
+
+    return course
+
+def get_user(id):
+    con = get_db()
+    cur = con.cursor()
+    cur.execute("SELECT * FROM users")
+    user = cur.fetchone()
+    cur.close()
+
+    return user
+
 @bp.route('/')
 @login_required
 def index():
+    user = get_user(id)
+
     con = get_db()
     cur = con.cursor(cursor_factory=DictCursor)
     cur.execute("SELECT * FROM courses")
     courses = cur.fetchall()
     cur.close()
 
-    return render_template('/courses/index.html', courses=courses)
+    return render_template('/courses/index.html', courses=courses, user=user)
 
 
 @bp.route('/create', methods=['GET', 'POST'])
@@ -50,24 +70,6 @@ def create():
 
     return render_template('/courses/create.html')
 
-
-def get_course(id):
-    con = get_db()
-    cur = con.cursor()
-    cur.execute("SELECT * FROM courses WHERE course_id=%s", (id,))
-    course = cur.fetchone()
-    cur.close()
-
-    return course
-
-def get_user(id):
-    con = get_db()
-    cur = con.cursor()
-    cur.execute("SELECT * FROM users WHERE id=%s", (id,))
-    user = cur.fetchone()
-    cur.close()
-
-    return user
 
 @bp.route('/<int:id>', methods=['GET', 'POST'])
 @login_required

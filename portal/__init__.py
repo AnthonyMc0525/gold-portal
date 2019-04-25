@@ -67,10 +67,24 @@ def create_app(test_config=None):
     app.register_blueprint(courses.bp)
     app.add_url_rule('/', endpoint='index')
 
+
     @app.route('/', methods=['GET', 'POST'])
     def index():
+
+        def get_user(id):
+            con = db.get_db()
+            cur = con.cursor()
+            cur.execute("SELECT * FROM users")
+            user = cur.fetchone()
+            cur.close()
+
+            return user
+
+        user = get_user(id)
+
         method = request.method
         error = None
+
         if method == 'POST':
             email = request.form['email']
             password = request.form['password']
@@ -92,7 +106,7 @@ def create_app(test_config=None):
                 g.user = user
 
 
-        return render_template('index.html')
+        return render_template('index.html', user=user)
 
 
     @app.route('/logout')
