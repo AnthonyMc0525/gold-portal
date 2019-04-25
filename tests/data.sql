@@ -9,5 +9,5 @@ pbkdf2:sha256:150000$E82PvcbL$8b6e318366700f77a993eaff991782bb22686af366a79dd810
       ('user2', 'teacher', 'user4@test.com', 'pbkdf2:sha256:150000$E82PvcbL$8b6e318366700f77a993eaff991782bb22686af366a79dd810a5cfc737b49284', 'teacher');
 
 INSERT INTO courses (name, number, description, teacher_id)
-VALUES ('Web development 2', 'CSET 170', 'lml', 1),
-       ('public speaking', 'ENG 221', 'kldnkn', 4);
+VALUES ('Web development 2', 'CSET 170', 'Spring Term', 1),
+       ('public speaking', 'ENG 221', 'Fall term', 4);

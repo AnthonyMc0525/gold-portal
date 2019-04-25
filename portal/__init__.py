@@ -67,10 +67,13 @@ def create_app(test_config=None):
     app.register_blueprint(courses.bp)
     app.add_url_rule('/', endpoint='index')
 
+
     @app.route('/', methods=['GET', 'POST'])
     def index():
+
         method = request.method
         error = None
+
         if method == 'POST':
             email = request.form['email']
             password = request.form['password']

@@ -12,11 +12,12 @@ def test_login(client, auth):
     assert b'teacher' in response.data
 
 def test_logout(client, auth):
-    auth.login()
 
     with client:
+        auth.login()
+        assert 'user_id' in session
         auth.logout()
-        assert 'first_name' not in session
+        assert 'user_id' not in session
 # logout test
 # It is the opposite of login
 # check if the session is gone after you hit the logout button
