@@ -25,7 +25,9 @@ def get_course(id):
 def get_user(id):
     con = get_db()
     cur = con.cursor()
-    cur.execute("SELECT * FROM users")
+    cur.execute("""SELECT id, first_name, last_name
+                FROM users
+                WHERE id=%s""", (id,))
     user = cur.fetchone()
     cur.close()
 
@@ -34,7 +36,6 @@ def get_user(id):
 @bp.route('/')
 @login_required
 def index():
-    user = get_user(id)
 
     con = get_db()
     cur = con.cursor(cursor_factory=DictCursor)
@@ -42,7 +43,7 @@ def index():
     courses = cur.fetchall()
     cur.close()
 
-    return render_template('/courses/index.html', courses=courses, user=user)
+    return render_template('/courses/index.html', courses=courses)
 
 
 @bp.route('/create', methods=['GET', 'POST'])
@@ -76,7 +77,7 @@ def create():
 @teacher_required 
 def single(id):
     course = get_course(id)
-    user = get_user(id)
+    user = get_user(course['teacher_id'])
     return render_template('courses/single.html', course=course, user=user)
 
 
