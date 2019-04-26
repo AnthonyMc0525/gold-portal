@@ -31,6 +31,9 @@
   {% endif %}
 
   {% if not g.user %}
+    {% if error %}
+    <span>{{ error }}</span>
+    {% endif %}
     <form method = "post">
       <label for="email">Email
         <input type="email" name="email" />
