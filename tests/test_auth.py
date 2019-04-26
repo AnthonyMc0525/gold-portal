@@ -1,7 +1,7 @@
-from flask import g, session
+from flask import session
 
 def test_login(client, auth):
-    # get the page
+  
     with client:
         response = client.get('/')
         assert response.status_code == 200
@@ -12,10 +12,11 @@ def test_login(client, auth):
         assert response.status_code == 200
         assert b'<form method = "post">' not in response.data
         assert b'Logout' in response.data
-        # assert b'1' in response.data
 
+def test_logout(client, auth):
 
-
-
-    
-    # check session user_id for correct id
+    with client:
+        auth.login()
+        assert 'user_id' in session
+        auth.logout()
+        assert 'user_id' not in session

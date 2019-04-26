@@ -3,6 +3,7 @@ import os
 import functools
 
 from flask import Flask, render_template, request, flash, session, g, redirect, url_for
+
 import psycopg2
 import psycopg2.extras
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -66,26 +67,11 @@ def create_app(test_config=None):
     app.register_blueprint(courses.bp)
     app.add_url_rule('/', endpoint='index')
 
-#    def handle_500_error(e):
-#        return '''
-#       <body> 
-#
-#            <h1 style="display: inline-block;
-#            font-size: 4em; position: relative;
-#            left: 34vw;">Something went wrong</h1>
-#
-#           <p style="position: relative; left: 31vw;
-#           font-size: 1.5em;"></p> 
-#
-#        </body>
-#
-#        ''', 500
-#
-#    app.register_error_handler(500, handle_500_error)
 
     @app.route('/', methods=['GET', 'POST'])
     def index():
         method = request.method
+        error = None
 
         if method == 'POST':
             email = request.form['email']
@@ -117,6 +103,7 @@ def create_app(test_config=None):
     def logout():
         session.clear()
         return redirect(url_for('index'))
+
 
 
     return app
