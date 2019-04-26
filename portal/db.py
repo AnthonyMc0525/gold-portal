@@ -53,7 +53,7 @@ def create_user():
     password = input(">")
     print("Enter user's Role")
     role = input(">")
-    with db.get_db() as con:
+    with get_db() as con:
         with con.cursor() as cur:
             cur.execute(
                 "INSERT INTO users(first_name, last_name,  email, password, role) VALUES (%s, %s, %s, %s, %s)",
