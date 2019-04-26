@@ -105,5 +105,13 @@ def create_app(test_config=None):
         return redirect(url_for('index'))
 
 
+    @app.route('/create-roster')
+    def roster():
+        
+        
+
+        return render_template('roster/create')
+
+
 
     return app
