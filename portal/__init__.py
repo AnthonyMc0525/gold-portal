@@ -107,7 +107,7 @@ def create_app(test_config=None):
             if error is None:
                 session.clear()
                 session['user_id'] = user['id']
-                return redirect(url_for('index'))
+                g.user = user
 
             flash(error)
 
