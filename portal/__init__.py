@@ -70,33 +70,34 @@ def create_app(test_config=None):
 
     @app.route('/', methods=['GET', 'POST'])
     def index():
-
         method = request.method
         error = None
 
         if method == 'POST':
             email = request.form['email']
             password = request.form['password']
+            user = None
+            error = None
 
             with db.get_db() as con:
                 with con.cursor() as cur:
-                    cur.execute("SELECT * FROM users WHERE email=%s", (email,))
+                    cur.execute('SELECT * FROM users WHERE email = %s', (email,))
                     user = cur.fetchone()
-                    
-            if email is None:
-                error = 'Incorrect email'
-            elif not check_password_hash(user['password'], password): 
-                error = 'Your Password was Incorrect'
-            print(error)
+
+
+            if user is None:
+                error = 'Incorrect email.'
+            elif not check_password_hash(user['password'], password):
+                error = 'Incorrect password.'
 
             if error is None:
                 session.clear()
                 session['user_id'] = user['id']
                 g.user = user
 
+            flash(error)
 
         return render_template('index.html')
-
 
     @app.route('/logout')
     def logout():
