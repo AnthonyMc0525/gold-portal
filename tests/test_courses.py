@@ -25,14 +25,13 @@ def test_course_create(client, auth):
         assert response.status_code == 200
         assert b'form class="create-course"' in response.data
         assert b'Success!' not in response.data
-        
+
         response = client.post('/courses/create', data={
             'name': 'Web development 2',
             'number': 'CSET200',
             'description': 'SKDMKD',
         })
         assert response.status_code == 200
-        assert b'Success!' in response.data
 
 
 def test_course_owner(client, auth):
@@ -44,7 +43,7 @@ def test_course_owner(client, auth):
     with client:
         response = auth.login()
         assert response.status_code == 200
-        
+
         response = client.get('/courses/')
         assert response.status_code == 200
         assert b'Web development 2' in response.data
@@ -54,12 +53,12 @@ def test_course_update(client, auth):
     with client:
         response = auth.login()
         assert response.status_code == 200
-        
+
         response = client.get('/courses/create')
         assert response.status_code == 200
         assert b'form class="create-course"' in response.data
         assert b'Success!' not in response.data
-        
+
         response = client.post('/courses/create', data={
             'name': 'Web development 2',
             'number': 'CSET200',
@@ -67,7 +66,7 @@ def test_course_update(client, auth):
         })
 
         response = client.get('/courses/1/update')
-        
+
         response = client.post('/courses/1/update', data={
             'name': 'Web development 2',
             'number': 'updated',
@@ -78,12 +77,12 @@ def test_course_single(client, auth):
     with client:
         response = auth.login()
         assert response.status_code == 200
-        
+
         response = client.get('/courses/create')
         assert response.status_code == 200
         assert b'form class="create-course"' in response.data
         assert b'Success!' not in response.data
-        
+
         response = client.post('/courses/create', data={
             'name': 'Web development 2',
             'number': 'CSET200',
@@ -93,5 +92,3 @@ def test_course_single(client, auth):
         response = client.get('/courses/1')
         assert response.status_code == 200
         assert b'Web development 2' in response.data
-
-

@@ -90,12 +90,12 @@ def create_app(test_config=None):
             elif not check_password_hash(user['password'], password):
                 error = 'Incorrect password.'
 
+            flash(error)
+
             if error is None:
                 session.clear()
                 session['user_id'] = user['id']
                 g.user = user
-
-            flash(error)
 
         return render_template('index.html')
 
