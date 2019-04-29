@@ -18,13 +18,13 @@ def create_session():
         session_time_start = request.form['sessiontime_start']
         session_time_end = request.form['sessiontime_end']
 
+        with db.get_db() as con:
+            with con.cur() as cur:
+                course_id = cur.execute('SELECT course_id FROM courses WHERE name = %s', (course_name,)).fetchone()
 
         with db.get_db() as con:
             with con.cur() as cur:
-                cur.execute('INSERT INTO sessions(course_id, start_time, end_time) VALUES (%s, %s, %s,)')
+                cur.execute('INSERT INTO sessions(course_id, start_time, end_time) VALUES (%s, %s, %s,)', (course_id, session_time_start, session_time_end))
+
 
     return render_template('/roster/create-session.html')
-
-@bp.route('/create-roster', methods=['GET', 'POST'])
-def create_roster():
-    return render_template('/roster/create-roster.html')
