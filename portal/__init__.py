@@ -107,10 +107,10 @@ def create_app(test_config=None):
 
     @app.route('/create-roster')
     def roster():
-        
-        
 
-        return render_template('roster/create')
+
+
+        return render_template('/roster/create-session.html')
 
 
 
