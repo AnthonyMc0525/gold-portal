@@ -227,3 +227,24 @@ p > a {
 .session_form {
   position: relative;
 }
+.toggle {
+  display: none;
+}
+.other_toggle {
+  font-size: 24pt;
+}
+.expanding {
+  margin-left: 25%;
+  margin-right: 25%;
+  position: relative;
+  right: 0px;
+}
+.this {
+  display: none;
+}
+.toggle:checked + .other_toggle + .this {
+  display: block;
+}
+.toggle:checked + .other_toggle{
+  display: none;
+}

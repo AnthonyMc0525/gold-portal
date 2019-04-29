@@ -68,7 +68,7 @@ def create_app(test_config=None):
     app.add_url_rule('/', endpoint='index')
 
     from . import roster
-    app.roster_blueprint(roster.bp)
+    app.register_blueprint(roster.bp)
 
 
     @app.route('/', methods=['GET', 'POST'])
