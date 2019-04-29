@@ -98,4 +98,4 @@ def update(id):
 
          return redirect(url_for('courses.index'))
 
-    return render_template('courses/update.html', course=course)
+    return render_template('courses/update.html', course=course) 
