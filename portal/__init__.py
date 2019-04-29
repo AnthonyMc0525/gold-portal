@@ -67,6 +67,9 @@ def create_app(test_config=None):
     app.register_blueprint(courses.bp)
     app.add_url_rule('/', endpoint='index')
 
+    from . import roster
+    app.roster_blueprint(roster.bp)
+
 
     @app.route('/', methods=['GET', 'POST'])
     def index():
@@ -103,15 +106,6 @@ def create_app(test_config=None):
     def logout():
         session.clear()
         return redirect(url_for('index'))
-
-
-    @app.route('/create-roster')
-    def roster():
-        
-        
-
-        return render_template('roster/create')
-
 
 
     return app
