@@ -107,5 +107,4 @@ def create_app(test_config=None):
         session.clear()
         return redirect(url_for('index'))
 
-
     return app
