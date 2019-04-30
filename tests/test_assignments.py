@@ -2,7 +2,7 @@ def test_assigments(client, auth):
 
     with client:
         auth.login()
-        response = client.get('/assignments/create')
+        response = client.get('/assignments/create/1')
         assert response.status_code == 200
         assert b'Assignments' in response.data
         assert b'<form method = "post">' not in response.data
@@ -14,16 +14,16 @@ def test_assignment_create(client, auth):
         response = auth.login()
         assert response.status_code == 200
 
-        response = client.get('/assignments/create')
+        response = client.get('/assignments/create/1')
         assert response.status_code == 200
         assert b'<form method = "post">' not in response.data
 
-        response = client.get('/assignments/create')
+        response = client.get('/assignments/create/1')
         assert response.status_code == 200
         assert b'form class="create-assignment"' in response.data
         assert b'Success!' not in response.data
 
-        response = client.post('/assignments/create', data={
+        response = client.post('/assignments/create/1', data={
             'name': 'Test 1',
             'due_date': '2019-04-25',
             'description': 'Zach day',
@@ -43,7 +43,7 @@ def test_assignment_update(client, auth):
         assert b'form class="create-assignment"' in response.data
         assert b'Success!' not in response.data
 
-        response = client.post('/assignments/create', data={
+        response = client.post('/assignments/create/1', data={
             'name': 'Test 1',
             'due_date': '2019-04-25',
             'description': 'Zach day',
