@@ -71,7 +71,6 @@ def get_user(id):
 
 @bp.route('/<int:id>', methods=['GET', 'POST'])
 @login_required
-@teacher_required 
 def single(id):
     course = get_course(id)
     user = get_user(id)

@@ -1,0 +1,43 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Thaddeus Stevens Portal{% endblock %}
+{% block header %}
+  {% if g.user  %}
+    <div class="out_button">
+      <button type="button" name="logout" id='logout'><img src="../static/icon.svg" alt="This is a button to show the logout button."></button>
+      <div class="logout_button">
+        <span>Welcome {{ g.user[1] }} {{ g.user[2] }}</span>
+        <p><a href="/logout" >Logout</a></p>
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}
+
+
+{% block content %}
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="{{url_for('courses.index')}}">Course List</a></li>
+      {% if g.user[5] == 'teacher' %}
+      <li><a href="{{url_for('courses.create')}}">Create a Course</a></li>
+      {% endif %}
+      {% if g.user[0] == assignments[4] %}
+      <li><a href="{{ url_for('assignments.create', id=assignments[0])}}">Create Assignment</a><li>
+      {% endif %}
+    </ul>
+  </nav>
+
+
+    {% for assignment in assignments %}
+    <article class="course">
+      <h2 class="course-list"> {{ assignment['name'] }}</h2>
+      <p>
+      {% if g.user[0] == assignment[4] %}
+        <a href="{{ url_for('assignments.update', id=assignment[0])}}">Edit This Assignment</a>
+      {% endif %}
+      <a href="{{ url_for('assignments.single', id=assignment[0])}}">View This Assignment</a> 
+      </p>
+    </article>
+    {% endfor %}
+{% endblock %}

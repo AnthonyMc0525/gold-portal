@@ -13,6 +13,19 @@ from portal.courses import get_course
 
 bp = Blueprint('assignments', __name__, url_prefix='/assignments')
 
+
+@bp.route('/')
+@login_required
+def index():
+    con = get_db()
+    cur = con.cursor(cursor_factory=DictCursor)
+    cur.execute("SELECT * FROM assignments")
+    assignments = cur.fetchall()
+    cur.close()
+
+    return render_template('/assignments/index.html', assignments=assignments)
+
+
 @bp.route('/create/<int:id>', methods=['GET', 'POST'])
 @login_required
 @teacher_required
@@ -24,7 +37,6 @@ def create(id):
         due_date = request.form['due_date']
         description = request.form['description']
 
-
         con = get_db()
         cur = con.cursor()
         cur.execute("INSERT INTO assignments (name, due_date, description, course_id) VALUES (%s, %s, %s, %s)", (name, due_date, description, id))
@@ -32,6 +44,7 @@ def create(id):
         cur.close()
 
         flash('Success!')
+        return redirect(url_for('assignments.index'))
 
     return render_template('assignments/create.html', course=course)
 
@@ -43,6 +56,15 @@ def get_assignment(id):
     cur.close()
 
     return assignments
+
+def get_user(id):
+    con = get_db()
+    cur = con.cursor()
+    cur.execute("SELECT * FROM users WHERE id=%s", (id,))
+    user = cur.fetchone()
+    cur.close()
+
+    return user
 
 @bp.route('/update/<int:id>', methods=['GET', 'POST'])
 @login_required
@@ -64,3 +86,19 @@ def update(id):
     return render_template('assignments/update.html', assignments=assignments)
 
 
+
+@bp.route('/<int:id>', methods=['GET', 'POST'])
+@login_required
+def single(id):
+    assignments = get_assignment(id)
+    user = get_user(id)
+
+    if request.method == 'get':
+         name = request.form['name']
+         due_date =  request.form['due_date']
+         description = request.form['description']
+
+
+         return redirect(url_for('courses.index'))
+
+    return render_template('assignments/single.html', user=user, assignments=assignments)
