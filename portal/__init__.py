@@ -3,8 +3,9 @@ import os
 import functools
 
 from flask import Flask, render_template, request, flash, session, g, redirect, url_for
+
 import psycopg2
-import psycopg2.extras
+from psycopg2.extras import DictCursor
 from werkzeug.security import check_password_hash, generate_password_hash
 
 def login_required(view):
@@ -74,6 +75,8 @@ def create_app(test_config=None):
     def index():
         method = request.method
         error = None
+        assignments = ''
+
         if method == 'POST':
             email = request.form['email']
             password = request.form['password']
@@ -95,13 +98,15 @@ def create_app(test_config=None):
                 g.user = user
 
 
-        return render_template('index.html')
+
+        return render_template('index.html', assignments=assignments)
 
 
     @app.route('/logout')
     def logout():
         session.clear()
         return redirect(url_for('index'))
+
 
 
     return app

@@ -25,8 +25,10 @@ def test_assignment_create(client, auth):
 
         response = client.post('/assignments/create', data={
             'name': 'Test 1',
-            'due_date': '1999-04-14',
+            'due_date': '2019-04-25',
             'description': 'Zach day',
+            'student_id': '3',
+            'course_id': '3'
         })
         assert response.status_code == 200
         assert b'Success!' in response.data
@@ -36,7 +38,7 @@ def test_assignment_update(client, auth):
         response = auth.login()
         assert response.status_code == 200
 
-        response = client.get('/assignments/create')
+        response = client.get('/assignments/create/1')
         assert response.status_code == 200
         assert b'form class="create-assignment"' in response.data
         assert b'Success!' not in response.data
@@ -45,12 +47,38 @@ def test_assignment_update(client, auth):
             'name': 'Test 1',
             'due_date': '2019-04-25',
             'description': 'Zach day',
+            'student_id': '3',
+            'course_id': '3'
         })
 
-        response = client.get('/assignments/1/update')
+        response = client.get('/assignments/update/1')
 
-        response = client.post('/assignments/1/update', data={
+        response = client.post('/assignments/update/1', data={
             'name': 'Test 1',
-            'due_date': '2019-05-08',
+            'due_date': '2019-04-25',
             'description': 'Yes',
+            'student_id': '3',
+            'course_id': '3'
         })
+
+def test_assignment(client, auth):
+    response = client.get('/')
+    assert b'<main class="course-list"' not in response.data
+
+    with client:
+        response = auth.login2()
+        assert response.status_code == 200
+
+        response = client.get('/assignments/create/1')
+       # assert response.status_code == 200
+
+        response = client.post('/assignments/create/1', data={
+            'name': 'other thing',
+            'due_date': '2018-02-02',
+            'description': 'yes',
+            'student_id': '2',
+            'course_id': '2'
+        })
+        response = client.get('/')
+        assert b'other thing' in response.data
+        assert b'<form method = "post">' not in response.data
