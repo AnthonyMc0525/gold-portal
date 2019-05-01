@@ -80,6 +80,7 @@ def update(id):
          cur = con.cursor()
          cur.execute("UPDATE assignments SET name = %s, due_date = %s, description = %s WHERE id = %s", (name, due_date, description, id,))
          con.commit()
+         cur.close()
 
          return redirect(url_for('index'))
 
@@ -97,7 +98,6 @@ def single(id):
          name = request.form['name']
          due_date =  request.form['due_date']
          description = request.form['description']
-
 
          return redirect(url_for('courses.index'))
 

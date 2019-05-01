@@ -36,7 +36,9 @@ def create():
         teacher_id = g.user[0]
         error = None
 
-        # Save to database
+        if name == '' or number == '' or description == '':
+            return render_template('/courses/create.html')
+
         con = get_db()
         cur = con.cursor()
         cur.execute(
@@ -94,6 +96,9 @@ def update(id):
          name = request.form['name']
          number =  request.form['number']
          description = request.form['description']
+
+         if name == '' or number == '' or description == '':
+             return redirect(url_for('courses.index'))
 
          con = get_db()
          cur = con.cursor()
