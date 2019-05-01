@@ -30,7 +30,7 @@ def test_assignment_create(client, auth):
             'course_id': '3'
         })
         assert response.status_code == 302
-        
+
 def test_assignment_update(client, auth):
     with client:
         response = auth.login()
@@ -74,7 +74,7 @@ def test_assignment(client, auth):
             'description': 'yes',
             'course_id': '2'
         })
-        response = client.get('/assignments/')
+        response = client.get('/assignments/2')
         assert b'other thing' in response.data
         assert b'<form method = "post">' not in response.data
 

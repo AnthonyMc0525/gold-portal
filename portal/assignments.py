@@ -14,16 +14,17 @@ from portal.courses import get_course
 bp = Blueprint('assignments', __name__, url_prefix='/assignments')
 
 
-@bp.route('/')
+@bp.route('/list/<int:id>')
 @login_required
-def index():
+def index(id):
+    course = get_course(id)
     con = get_db()
     cur = con.cursor(cursor_factory=DictCursor)
-    cur.execute("SELECT * FROM assignments")
+    cur.execute("SELECT * FROM assignments WHERE course_id = %s", (id,))
     assignments = cur.fetchall()
     cur.close()
 
-    return render_template('/assignments/index.html', assignments=assignments)
+    return render_template('/assignments/index.html', assignments=assignments, course=course)
 
 
 @bp.route('/create/<int:id>', methods=['GET', 'POST'])
@@ -47,7 +48,7 @@ def create(id):
         cur.close()
 
         flash('Success!')
-        return redirect(url_for('assignments.index'))
+        return redirect(url_for('courses.index'))
 
     return render_template('assignments/create.html', course=course)
 

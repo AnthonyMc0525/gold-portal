@@ -31,7 +31,7 @@
       <p name="description">{{ assignments['description'] }}</p>
       <p name="description">Created by: {{ user[1] }} {{ user[2] }}</p>
       {% if g.user[0] == assignments[4] %}
-        <a href="{{ url_for('courses.update', id=assignments[0])}}">Edit This Assignemnt</a>
+        <a href="{{ url_for('courses.update', id=course[0])}}">Edit This Assignemnt</a>
       {% endif %}
     </article>
 {% endblock %}

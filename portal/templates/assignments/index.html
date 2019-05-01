@@ -4,7 +4,7 @@
 {% block header %}
   {% if g.user  %}
     <div class="out_button">
-      <button type="button" name="logout" id='logout'><img src="../static/icon.svg" alt="This is a button to show the logout button."></button>
+      <button type="button" name="logout" id='logout'><img src="/static/icon.svg" alt="This is a button to show the logout button."></button>
       <div class="logout_button">
         <span>Welcome {{ g.user[1] }} {{ g.user[2] }}</span>
         <p><a href="/logout" >Logout</a></p>
@@ -36,7 +36,7 @@
       {% if g.user[0] == assignment[4] %}
         <a href="{{ url_for('assignments.update', id=assignment[0])}}">Edit This Assignment</a>
       {% endif %}
-      <a href="{{ url_for('assignments.single', id=assignment[0])}}">View This Assignment</a> 
+      <a href="{{ url_for('assignments.single', id=assignment[0])}}">View This Assignment</a>
       </p>
     </article>
     {% endfor %}
