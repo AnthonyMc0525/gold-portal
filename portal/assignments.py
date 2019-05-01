@@ -37,6 +37,9 @@ def create(id):
         due_date = request.form['due_date']
         description = request.form['description']
 
+        if name == '' or due_date == '' or description == '':
+            return redirect(url_for('assignments.index'))
+
         con = get_db()
         cur = con.cursor()
         cur.execute("INSERT INTO assignments (name, due_date, description, course_id) VALUES (%s, %s, %s, %s)", (name, due_date, description, id))
@@ -75,6 +78,9 @@ def update(id):
          name = request.form['name']
          due_date =  request.form['due_date']
          description = request.form['description']
+
+         if name == '' or due_date == '' or description == '':
+             return redirect(url_for('index'))
 
          con = get_db()
          cur = con.cursor()
