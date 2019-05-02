@@ -57,5 +57,5 @@ def create_session(course_id):
                     cur.execute('INSERT INTO roster (session_id, user_id) VALUES (%s, %s, %s)', (session_id, student_id))
 
     
-    return render_template('roster/create-roster.html')
+    return render_template('roster/create-session.html')
 # session_name=session['name'])
