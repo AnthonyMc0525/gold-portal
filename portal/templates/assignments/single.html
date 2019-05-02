@@ -27,8 +27,8 @@
       <h2 class="assignment-list" name="name" name="number">{{ assignments[1] }}: {{  assignments[2] }}</h2>
       <p name="description">{{ assignments['description'] }}</hp>
       <p>
-      {% if g.user[0] == "teacher" %}
-       <a href="{{ url_for('courses.update', id=assignments[0])}}">Edit This Assignment</a>
+      {% if g.user[0] == user[0] %}
+       <a href="{{ url_for('assignments.update', id=assignments[0])}}">Edit This Assignment</a>
       {% endif %}
       </p>
     </article>
