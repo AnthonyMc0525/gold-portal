@@ -27,7 +27,8 @@ def test_assignment_create(client, auth):
             'name': 'Test 1',
             'due_date': '2019-04-25',
             'description': 'Zach day',
-            'course_id': '3'
+            'course_id': '3',
+            'points': '10'
         })
         assert response.status_code == 302
 
@@ -45,7 +46,8 @@ def test_assignment_update(client, auth):
             'name': 'Test 1',
             'due_date': '2019-04-25',
             'description': 'Zach day',
-            'course_id': '3'
+            'course_id': '3',
+            'points': '10'
         })
 
         response = client.get('/assignments/update/1')
@@ -54,7 +56,8 @@ def test_assignment_update(client, auth):
             'name': 'Test 1',
             'due_date': '2019-04-25',
             'description': 'Yes',
-            'course_id': '3'
+            'course_id': '3',
+            'points': '10'
         })
 
 def test_assignment(client, auth):
@@ -69,10 +72,11 @@ def test_assignment(client, auth):
        # assert response.status_code == 200
 
         response = client.post('/assignments/create/1', data={
-            'name': 'other thing',
-            'due_date': '2018-02-02',
-            'description': 'yes',
-            'course_id': '2'
+            'name': 'Test 1',
+            'due_date': '2019-04-25',
+            'description': 'Zach day',
+            'course_id': '3',
+            'points': '10'
         })
         response = client.get('/assignments/2')
         assert b'other thing' in response.data
@@ -89,10 +93,11 @@ def test_assignment_single(client, auth):
         assert b'Success!' not in response.data
 
         response = client.post('/assignments/create/1', data={
-            'name': 'other',
-            'due_date': '2018-02-02',
-            'description': 'yes',
-            'course_id': '2'
+            'name': 'Test 1',
+            'due_date': '2019-04-25',
+            'description': 'Zach day',
+            'course_id': '3',
+            'points': '10'
         })
 
         response = client.get('/assignments/list/1')
