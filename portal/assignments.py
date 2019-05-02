@@ -18,13 +18,14 @@ bp = Blueprint('assignments', __name__, url_prefix='/assignments')
 @login_required
 def index(id):
     course = get_course(id)
+    user = get_user(id)
     con = get_db()
     cur = con.cursor(cursor_factory=DictCursor)
     cur.execute("SELECT * FROM assignments WHERE course_id = %s", (id,))
     assignments = cur.fetchall()
     cur.close()
 
-    return render_template('/assignments/index.html', assignments=assignments, course=course)
+    return render_template('/assignments/index.html', assignments=assignments, user=user, course=course)
 
 
 @bp.route('/create/<int:id>', methods=['GET', 'POST'])

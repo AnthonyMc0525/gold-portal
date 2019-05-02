@@ -33,7 +33,7 @@
     <article class="assignment">
       <h2 class="assignment-list"> {{ assignment['name'] }}</h2>
       <p>
-      {% if g.user[0] == "teacher" %}
+      {% if g.user[0] == user[0] %}
         <a href="{{ url_for('assignments.update', id=assignment[0])}}">Edit This Assignment</a>
       {% endif %}
       <a href="{{ url_for('assignments.single', id=assignment[0])}}">View This Assignment</a>
