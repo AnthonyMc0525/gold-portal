@@ -97,4 +97,4 @@ def test_assignment_single(client, auth):
 
         response = client.get('/assignments/list/1')
         assert response.status_code == 200
-        assert b'Success' in response.data
+        assert b'<h2' in response.data

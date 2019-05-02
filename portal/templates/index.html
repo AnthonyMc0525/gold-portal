@@ -7,7 +7,7 @@
     <div class="out_button">
       <button type="button" name="logout" id='logout'><img src="../static/icon.svg" alt="This is a button to show the logout button."></button>
       <div class="logout_button">
-        <span>Welcome {{ g.user[1] }} {{ g.user[2] }}</span>
+        <span>Welcome {{ g.user['first_name'] }} {{ g.user['last_name'] }}</span>
         <p><a href="/logout" >Logout</a></p>
       </div>
     </div>
@@ -39,6 +39,9 @@
   {% endif %}
 
   {% if not g.user %}
+    {% for message in get_flashed_messages() %}
+      <div class="flash">{{ message }}</div>
+    {% endfor %}
     <form method = "post">
       <label for="email">Email
         <input type="email" name="email" />

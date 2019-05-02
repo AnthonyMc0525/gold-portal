@@ -58,7 +58,7 @@ class AuthActions(object):
             )
 
     def logout(self):
-        return self._client.get('/')
+        return self._client.get('/logout')
 
 
 @pytest.fixture

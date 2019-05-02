@@ -26,4 +26,3 @@ VALUES ('Thing to get done', '2018-01-01', 'thing', 1),
        ('other thing', '2018-02-02', 'yes', 2),
        ('Test 1', '2019-04-25', 'Zach day', 3),
        ('Homework 1', '2014-04-14','Another day', 4);
-

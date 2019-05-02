@@ -126,6 +126,13 @@ button a {
 /* Logout Button */
 /*               */
 
+.flash {
+  position: relative;
+  float: left;
+  padding-left: 20px;
+  color: #8B1E41;
+}
+
 
 @media (min-width: 760px) {
   footer {

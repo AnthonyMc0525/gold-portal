@@ -13,9 +13,30 @@ from portal.db import get_db
 
 bp = Blueprint('courses', __name__, url_prefix='/courses')
 
+def get_course(id):
+    con = get_db()
+    cur = con.cursor()
+    cur.execute("SELECT * FROM courses WHERE course_id=%s", (id,))
+    course = cur.fetchone()
+    cur.close()
+
+    return course
+
+def get_user(id):
+    con = get_db()
+    cur = con.cursor()
+    cur.execute("""SELECT id, first_name, last_name
+                FROM users
+                WHERE id=%s""", (id,))
+    user = cur.fetchone()
+    cur.close()
+
+    return user
+
 @bp.route('/')
 @login_required
 def index():
+
     con = get_db()
     cur = con.cursor(cursor_factory=DictCursor)
     cur.execute("SELECT * FROM courses")
@@ -53,36 +74,11 @@ def create():
     return render_template('/courses/create.html')
 
 
-def get_course(id):
-    con = get_db()
-    cur = con.cursor()
-    cur.execute("SELECT * FROM courses WHERE course_id=%s", (id,))
-    course = cur.fetchone()
-    cur.close()
-
-    return course
-
-def get_user(id):
-    con = get_db()
-    cur = con.cursor()
-    cur.execute("SELECT * FROM users WHERE id=%s", (id,))
-    user = cur.fetchone()
-    cur.close()
-
-    return user
-
 @bp.route('/<int:id>', methods=['GET', 'POST'])
 @login_required
 def single(id):
     course = get_course(id)
-    user = get_user(id)
-
-    if request.method == 'get':
-         name = request.form['name']
-         number =  request.form['number']
-         description = request.form['description']
-         return redirect(url_for('courses.index'))
-
+    user = get_user(course['teacher_id'])
     return render_template('courses/single.html', course=course, user=user)
 
 
@@ -107,4 +103,4 @@ def update(id):
 
          return redirect(url_for('courses.index'))
 
-    return render_template('courses/update.html', course=course)
+    return render_template('courses/update.html', course=course) 
