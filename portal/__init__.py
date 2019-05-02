@@ -22,7 +22,7 @@ def teacher_required(view):
     @functools.wraps(view)
     def wrapped_view(**kwargs):
         if g.user[5] != "teacher":
-            return redirect(url_for("courses.index"))
+            return redirect(url_for('courses.index'))
 
         return view(**kwargs)
 

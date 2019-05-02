@@ -23,8 +23,9 @@ CREATE TABLE courses (
 CREATE TABLE sessions (
     session_id bigserial PRIMARY KEY,
     course_id bigint REFERENCES courses(course_id),
-    start_time time NOT NULL,
-    end_time time NOT NULL,
+    name text NOT NULL,
+    session_time_start time NOT NULL,
+    session_time_end time NOT NULL
   );
 
   CREATE TABLE roster (

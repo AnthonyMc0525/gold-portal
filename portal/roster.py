@@ -13,18 +13,14 @@ bp = Blueprint('roster', __name__)
 @bp.route('/create-session', methods=['GET', 'POST'])
 def create_session():
     if request.method == 'POST':
-        course_name = request.form['course_name']
-        session_name = request.form['session_name']
+        name = request.form['session_name']
         session_time_start = request.form['sessiontime_start']
         session_time_end = request.form['sessiontime_end']
 
 
-        with db.get_db() as con:
-            with con.cur() as cur:
-                cur.execute('INSERT INTO sessions(course_id, start_time, end_time) VALUES (%s, %s, %s,)')
+        con = get_db()
+        cur = con.cursor()
+        cur.execute("INSERT INTO sessions (name, session_time_start, session_time_end) VALUES (%s, %s, %s)", (name, session_time_start, session_time_end))
+        cur.close()
 
     return render_template('/roster/create-session.html')
-
-@bp.route('/create-roster', methods=['GET', 'POST'])
-def create_roster():
-    return render_template('/roster/create-roster.html')
