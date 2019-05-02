@@ -25,9 +25,11 @@
 
     <article class="course" method="get">
       <h2 class="course-list" name="name" name="number">{{ assignments[1] }}: {{  assignments[2] }}</h2>
-      <p name="description">{{ assignments['description'] }}</p>
+      <p name="description">{{ assignments['description'] }}</hp>
+      <p>
       {% if g.user[0] == "teacher" %}
        <a href="{{ url_for('courses.update', id=assignments[0])}}">Edit This Assignment</a>
       {% endif %}
+      </p>
     </article>
 {% endblock %}
