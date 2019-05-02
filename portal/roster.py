@@ -25,7 +25,7 @@ def get_session(id):
 def create_session(course_id):
 #    course = get_course(course_id)
     if request.method == 'POST':
-        session_name = request.form['session_name']
+        name = request.form['session_name']
         session_time_start = request.form['sessiontime_start']
         session_time_end = request.form['sessiontime_end']
         # a variable for all the students that are being added
