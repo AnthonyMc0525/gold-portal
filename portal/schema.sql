@@ -34,5 +34,6 @@ CREATE TABLE assignments (
     name text NOT NULL,
     due_date date NOT NULL,
     description text NOT NULL,
+    points numeric NOT NULL,
     course_id bigint NOT NULL REFERENCES courses(course_id)
 );

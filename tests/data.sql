@@ -21,8 +21,8 @@ VALUES (1, 'A', 'First session', '09:00', '09:50'),
        (3, 'C', 'Third Session', '11:00', '11:50'),
        (4, 'D', 'Fourth Session', '12:00', '12:50');
 
-INSERT INTO assignments (name, due_date, description, course_id)
-VALUES ('Thing to get done', '2018-01-01', 'thing', 1),
-       ('other thing', '2018-02-02', 'yes', 2),
-       ('Test 1', '2019-04-25', 'Zach day', 3),
-       ('Homework 1', '2014-04-14','Another day', 4);
+INSERT INTO assignments (name, due_date, description, course_id, points)
+VALUES ('Thing to get done', '2018-01-01', 'thing', 1, 10),
+       ('other thing', '2018-02-02', 'yes', 2, 10),
+       ('Test 1', '2019-04-25', 'Zach day', 3, 10),
+       ('Homework 1', '2014-04-14','Another day', 4, 10);

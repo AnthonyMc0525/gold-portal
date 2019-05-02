@@ -25,7 +25,8 @@
 
     <article class="assignment" method="get">
       <h2 class="assignment-list" name="name" name="number">{{ assignments[1] }}: {{  assignments[2] }}</h2>
-      <p name="description">{{ assignments['description'] }}</hp>
+      <p name="description">{{ assignments['description'] }}</p>
+      <p name="points">Total Points: {{ assignments['points'] }}</p>
       <p>
       {% if g.user[0] == user[0] %}
        <a href="{{ url_for('assignments.update', id=assignments[0])}}">Edit This Assignment</a>
