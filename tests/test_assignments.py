@@ -95,6 +95,6 @@ def test_assignment_single(client, auth):
             'course_id': '2'
         })
 
-        response = client.get('/assignments/1')
+        response = client.get('/assignments/list/1')
         assert response.status_code == 200
         assert b'Success' in response.data
