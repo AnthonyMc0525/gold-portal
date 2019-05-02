@@ -29,12 +29,11 @@
     {% for course in courses %}
     <article class="course">
       <h2 class="course-list"> {{ course[2] }}: {{  course[1] }}</h2>
-  
       <p>
       {% if g.user[0] == course[4] %}
         <a href="{{ url_for('courses.update', id=course[0])}}">edit this course</a>
       {% endif %}
-      <a href="{{ url_for('courses.single', id=course[0])}}">view this course</a> 
+      <a href="{{ url_for('courses.single', id=course[0])}}">view this course</a>
       </p>
     </article>
 

@@ -220,11 +220,11 @@ p > a {
   margin-left: 10px;
 }
 
-.course-list {
+.course-list, .assignment-list {
   text-align: center;
 }
 
-.course {
+.course, .assignment {
   margin-left: 25%;
   margin-right: 25%;
   border-style: inset;

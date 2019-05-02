@@ -24,12 +24,17 @@
       </ul>
     </nav>
     {% elif g.user[5] == "student" %}
-    <nav>
-      <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="{{url_for('courses.index')}}">Courses</a></li>
-      </ul>
-    </nav>
+      {% for assignment in assignments %}
+        <article class="assignment-list">
+          <h2 class="course-list">{{ assignment[1] }}</h2>
+        </article>
+      {% endfor %}
+      <nav>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="{{url_for('courses.index')}}">Courses</a></li>
+        </ul>
+      </nav>
     {% endif %}
   {% endif %}
 

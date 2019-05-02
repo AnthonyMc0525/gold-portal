@@ -5,7 +5,7 @@ import functools
 from flask import Flask, render_template, request, flash, session, g, redirect, url_for
 
 import psycopg2
-import psycopg2.extras
+from psycopg2.extras import DictCursor
 from werkzeug.security import check_password_hash, generate_password_hash
 
 def login_required(view):
@@ -67,6 +67,9 @@ def create_app(test_config=None):
     app.register_blueprint(courses.bp)
     app.add_url_rule('/', endpoint='index')
 
+    from . import assignments
+    app.register_blueprint(assignments.bp)
+    app.add_url_rule('/', endpoint='index')
 
     @app.route('/', methods=['GET', 'POST'])
     def index():
@@ -83,7 +86,6 @@ def create_app(test_config=None):
                 with con.cursor() as cur:
                     cur.execute('SELECT * FROM users WHERE email = %s', (email,))
                     user = cur.fetchone()
-
 
             if user is None:
                 error = 'Incorrect email.'

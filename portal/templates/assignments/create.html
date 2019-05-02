@@ -1,0 +1,37 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Thaddeus Stevens Portal{% endblock %}
+
+{% block header %}
+  {% if g.user %}
+  <div class="logout_button">
+    <span>Welcome {{ g.user[1] }} {{ g.user[2] }}</span>
+    <button type="button" name="logout" id='logout'><a href="/logout">Logout</a></button>
+  </div>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  <h2 class='assignment-title'>Assignments</h2>
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="{{url_for('courses.index')}}">Course List</a></li>
+      {% if g.user[5] == 'teacher' %}
+      <li><a href="{{url_for('courses.create')}}">Create a Course</a></li>
+      {% endif %}
+    </ul>
+  </nav>
+  <form class="create-assignment" method="post" required>
+    <label for="name">Assignment Name
+      <input type="text" name="name" required />
+    </label>
+    <label for="due_date">Due Date
+      <input type="date" name="due_date" required />
+    </label>
+    <label for="description">Assignment Description
+      <textarea name="description" rows="8" cols="59" required></textarea>
+    </label>
+    <input type="submit" name="Create Assignment" value="Create Assignment">
+  </form>
+{% endblock %}

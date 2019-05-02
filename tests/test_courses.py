@@ -73,6 +73,7 @@ def test_course_update(client, auth):
             'description': 'updated',
         })
 
+
 def test_course_single(client, auth):
     with client:
         response = auth.login()
