@@ -17,6 +17,9 @@ def create_session():
         session_time_start = request.form['sessiontime_start']
         session_time_end = request.form['sessiontime_end']
 
+        with db.get_db() as con:
+            with con.cur() as cur:
+                course_id = cur.execute('SELECT course_id FROM courses WHERE name = %s', (course_name,)).fetchone()
 
         con = get_db()
         cur = con.cursor()
