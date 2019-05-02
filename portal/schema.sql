@@ -23,6 +23,7 @@ CREATE TABLE courses (
 CREATE TABLE sessions (
     session_id bigserial PRIMARY KEY,
     course_id bigint REFERENCES courses(course_id),
+    name varchar(50) NOT NULL,
     start_time time NOT NULL,
     end_time time NOT NULL,
   );
