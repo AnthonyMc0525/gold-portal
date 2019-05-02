@@ -23,8 +23,8 @@
    </ul>
  </nav>
 
-    <article class="course" method="get">
-      <h2 class="course-list" name="name" name="number">{{ assignments[1] }}: {{  assignments[2] }}</h2>
+    <article class="assignment" method="get">
+      <h2 class="assignment-list" name="name" name="number">{{ assignments[1] }}: {{  assignments[2] }}</h2>
       <p name="description">{{ assignments['description'] }}</hp>
       <p>
       {% if g.user[0] == "teacher" %}

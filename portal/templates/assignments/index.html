@@ -30,8 +30,8 @@
 
 
     {% for assignment in assignments %}
-    <article class="course">
-      <h2 class="course-list"> {{ assignment['name'] }}</h2>
+    <article class="assignment">
+      <h2 class="assignment-list"> {{ assignment['name'] }}</h2>
       <p>
       {% if g.user[0] == "teacher" %}
         <a href="{{ url_for('assignments.update', id=assignment[0])}}">Edit This Assignment</a>
