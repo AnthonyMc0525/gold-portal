@@ -22,10 +22,9 @@ CREATE TABLE courses (
 );
 
 CREATE TABLE sessions (
-    id bigserial PRIMARY KEY,
+    session_id bigserial PRIMARY KEY,
     course_id bigint NOT NULL REFERENCES courses(course_id),
     name text NOT NULL,
-    description text NOT NULL,
     start_time time NOT NULL,
     end_time time NOT NULL
 );
