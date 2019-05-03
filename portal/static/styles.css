@@ -231,3 +231,51 @@ p > a {
   border-width: thick;
   border-color: #8B1E41;
 }
+.session_form {
+  position: relative;
+}
+.toggle {
+  display: none;
+}
+.other_toggle {
+  font-size: 24pt;
+}
+.expanding {
+  margin-left: 25%;
+  margin-right: 25%;
+  position: relative;
+  right: 0px;
+}
+.this {
+  display: none;
+}
+.toggle:checked + .other_toggle + .this {
+  display: block;
+}
+.toggle:checked + .other_toggle{
+  display: none;
+}
+
+/*               */
+/* Session Table */
+/*      |        */
+
+.session_form {
+  text-align: center;
+}
+
+#start_time, #end_time {
+  padding-left: 25px;
+  padding-right: 25px;
+  width: 80%;
+  font-size: 25px;
+}
+
+.session_button {
+  margin-top: 50px;
+  display: block;
+}
+
+/*      |        */
+/* Session Table */
+/*               */

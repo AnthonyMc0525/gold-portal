@@ -31,6 +31,8 @@
       {% if g.user[0] == course[4] %}
         <a href="{{ url_for('courses.update', id=course[0])}}">Edit This Course</a>
         <a href="{{ url_for('assignments.create', id=course[0])}}">Create Assignment</a>
+        <a href="{{ url_for('roster.create_session')}}">create a session</a>
+
       {% endif %}
       </p>
     </article>

@@ -1,0 +1,45 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Thaddeus Stevens Portal{% endblock %}
+{% block header %}
+  {% if g.user  %}
+    <div class="out_button">
+      <button type="button" name="logout" id='logout'><img src="../static/icon.svg" alt="This is a button to show the logout button."></button>
+      <div class="logout_button">
+        <span>Welcome {{ g.user[1] }} {{ g.user[2] }}</span>
+        <p><a href="/logout" >Logout</a></p>
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}
+
+
+{% block content %}
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="{{url_for('courses.index')}}">Course List</a></li>
+      {% if g.user[5] == 'teacher' %}
+      <li><a href="{{url_for('courses.create')}}">Create a Course</a></li>
+      {% endif %}
+    </ul>
+  </nav>
+  <h2>{{ session_name }}</h2>
+  {% for student in roster %}
+    <p>{{ student['last-name'] }}, {{ student['first-name'] }}</p>
+  {% endfor %}
+  <!-- expanding button -->
+  <div class="session_form">
+    <div class="expanding">
+      <input id="collapsible" class="toggle" type="checkbox">
+        <label for="collapsible" class="other_toggle">Add Student</label>
+        <form class="this" action="" method="post">
+          <label for="first_name">First Name</label>
+            <input type="text" name="first_name" value="">
+          <label for="nast_name">Last Name</label>
+            <input type="text" name="last_name" value="">
+          <input type="submit" name="" value="Add Student">
+        </form>
+    </div>
+  </div>
+{% endblock %}

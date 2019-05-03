@@ -22,7 +22,7 @@ def teacher_required(view):
     @functools.wraps(view)
     def wrapped_view(**kwargs):
         if g.user[5] != "teacher":
-            return redirect(url_for("courses.index"))
+            return redirect(url_for('courses.index'))
 
         return view(**kwargs)
 
@@ -71,6 +71,10 @@ def create_app(test_config=None):
     app.register_blueprint(assignments.bp)
     app.add_url_rule('/', endpoint='index')
 
+    from . import roster
+    app.register_blueprint(roster.bp)
+
+
     @app.route('/', methods=['GET', 'POST'])
     def index():
         method = request.method
@@ -105,7 +109,5 @@ def create_app(test_config=None):
     def logout():
         session.clear()
         return redirect(url_for('index'))
-
-
 
     return app

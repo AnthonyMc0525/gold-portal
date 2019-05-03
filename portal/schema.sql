@@ -1,4 +1,5 @@
 DROP TABLE IF EXISTS assignments;
+DROP TABLE IF EXISTS roster;
 DROP TABLE IF EXISTS sessions;
 DROP TABLE IF EXISTS courses;
 DROP TABLE IF EXISTS users;
@@ -37,3 +38,8 @@ CREATE TABLE assignments (
     points numeric NOT NULL,
     course_id bigint NOT NULL REFERENCES courses(course_id)
 );
+
+  CREATE TABLE roster (
+    session_id bigint REFERENCES sessions(session_id),
+    user_id bigint REFERENCES users(id)
+  );
