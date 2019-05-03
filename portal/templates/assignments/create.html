@@ -33,7 +33,7 @@
       <textarea name="description" rows="8" cols="59" required></textarea>
     </label>
     <label for="points">Assignment's Points
-        <input type="number" min="0" name="points"/>
+      <input min='0' type="number" name="points" onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57" required />
     </label>
     <input type="submit" name="Create Assignment" value="Create Assignment">
   </form>
