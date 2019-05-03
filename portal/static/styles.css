@@ -260,6 +260,10 @@ p > a {
 /* Session Table */
 /*      |        */
 
+.session_label {
+  margin-top: 50px;
+}
+
 .session_form {
   text-align: center;
 }
@@ -272,8 +276,8 @@ p > a {
 }
 
 .session_button {
-  margin-top: 50px;
-  display: block;
+  margin-bottom: 50px;
+  margin-left: 50px;
 }
 
 /*      |        */
