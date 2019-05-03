@@ -30,11 +30,13 @@
       <label for="session_name">Session Name</label>
         <input id="session_name" name="session_name" placeholder="Session name.." type="text">
       <label for="session_time_start">Start Time</label>
-        <input id="start_time" name="sessiontime_start" placeholder="Start Time" type="text">
+        <input id="start_time" name="sessiontime_start" placeholder="Start Time" type="time">
       <label for="session_time_end">End Time</label>
-        <input id="end_time" type="text" name="sessiontime_end" value="" placeholder="End Time">
-        <button onclick="addField()">+</button>
-      <input type="submit" name="" value="Add Student">
+        <input id="end_time" type="time" name="sessiontime_end" value="" placeholder="End Time">
+      <label for="student">Student</label>
+        <input type="text" name="Student Name" value="" placeholder="Student Name">
+        <button class = "session_button" onclick="addField()">+</button>
+      <input type="submit" name="" value="Submit">
     </form>
   </div>
 {% endblock %}
