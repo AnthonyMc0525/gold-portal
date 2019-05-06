@@ -15,11 +15,11 @@ VALUES ('Web development 2', 'CSET 170', 'Spring Term', 1),
        ('Database Design', 'CSET 155', 'Fall Term', 1),
        ('Critical Thinking', 'ENG 41', 'Spring Term', 4);
 
-INSERT INTO sessions (course_id, name, description, start_time, end_time)
-VALUES (1, 'A', 'First session', '09:00', '09:50'),
-       (2, 'B', 'Second session', '10:00', '10:50'),
-       (3, 'C', 'Third Session', '11:00', '11:50'),
-       (4, 'D', 'Fourth Session', '12:00', '12:50');
+INSERT INTO sessions (course_id, name, start_time, end_time)
+VALUES (1, 'A', '09:00', '09:50'),
+       (2, 'B', '10:00', '10:50'),
+       (3, 'C', '11:00', '11:50'),
+       (4, 'D', '12:00', '12:50');
 
 INSERT INTO assignments (name, due_date, description, course_id, points)
 VALUES ('Thing to get done', '2018-01-01', 'thing', 1, 10),

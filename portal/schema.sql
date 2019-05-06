@@ -1,4 +1,5 @@
 DROP TABLE IF EXISTS assignments;
+DROP TABLE IF EXISTS roster;
 DROP TABLE IF EXISTS sessions;
 DROP TABLE IF EXISTS courses;
 DROP TABLE IF EXISTS users;
@@ -21,10 +22,9 @@ CREATE TABLE courses (
 );
 
 CREATE TABLE sessions (
-    id bigserial PRIMARY KEY,
+    session_id bigserial PRIMARY KEY,
     course_id bigint NOT NULL REFERENCES courses(course_id),
     name text NOT NULL,
-    description text NOT NULL,
     start_time time NOT NULL,
     end_time time NOT NULL
 );
@@ -37,3 +37,8 @@ CREATE TABLE assignments (
     points numeric NOT NULL,
     course_id bigint NOT NULL REFERENCES courses(course_id)
 );
+
+  CREATE TABLE roster (
+    session_id bigint REFERENCES sessions(session_id),
+    user_id bigint REFERENCES users(id)
+  );

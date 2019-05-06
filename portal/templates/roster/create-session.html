@@ -1,0 +1,52 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Thaddeus Stevens Portal{% endblock %}
+{% block header %}
+  {% if g.user  %}
+    <div class="out_button">
+      <button type="button" name="logout" id='logout'><img src="../static/icon.svg" alt="This is a button to show the logout button."></button>
+      <div class="logout_button">
+        <span>Welcome {{ g.user[1] }} {{ g.user[2] }}</span>
+        <p><a href="/logout" >Logout</a></p>
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}
+
+
+{% block content %}
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="{{url_for('courses.index')}}">Course List</a></li>
+      {% if g.user[5] == 'teacher' %}
+      <li><a href="{{url_for('courses.create')}}">Create a Course</a></li>
+      {% endif %}
+    </ul>
+  </nav>
+  <h2>course name</h2>
+  <div class="session_form">
+    <form id = "session_form" action="" method="post">
+      <input type="submit" class="session_submit" value="Submit">
+      <label for="session_name" class="session_label">Session Name</label>
+        <input id="session_name" name="session_name" placeholder="Session name.." type="text">
+      <label for="session_time_start">Start Time</label>
+        <input id="start_time" name="sessiontime_start" placeholder="Start Time" type="time">
+      <label for="session_time_end">End Time</label>
+        <input id="end_time" type="time" name="sessiontime_end" value="" placeholder="End Time">
+      <label for="student">Student</label>
+        <input type="text" name="Student Name" placeholder="Student Name" class = "student_name">
+    </form>
+    <button class = "session_button" onclick="createInput()">+</button>
+  </div>
+
+  <script>
+    function createInput() {
+      const container = document.getElementById('session_form')
+      const createEl = document.createElement("input");
+      createEl.setAttribute("type", "text");
+      createEl.setAttribute("placeholder", "Student Name");
+      container.appendChild(createEl);
+    };
+  </script>
+{% endblock %}
