@@ -21,6 +21,8 @@ def get_session(id):
 #         with con.cur() as cur:
 #             cur.execute('SELECT * FROM sessions WHERE session_id = %s', (id,))
 
+@login_required
+@teacher_required
 @bp.route('/create-session/<int:course_id>', methods=['GET', 'POST'])
 def create_session(course_id):
 #    course = get_course(course_id)
